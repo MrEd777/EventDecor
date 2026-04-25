@@ -1,0 +1,65 @@
+{% extends 'admin/base.html' %}
+{% block title %}Настройки сайта{% endblock %}
+{% block page_title %}Настройки главных изображений сайта{% endblock %}
+
+{% block content %}
+<div class="admin-header-actions mb-4" style="margin-bottom:20px;">
+    <a href="{{ url_for('admin_portfolio') }}" class="btn btn-secondary">Вернуться в портфолио</a>
+</div>
+
+<div class="form-container" style="max-width: 800px;">
+    <p style="margin-bottom:20px;">На этой странице вы можете задать свои авторские фоновые фотографии для главной страницы вместо стандартных.</p>
+    <form method="POST" class="admin-form" enctype="multipart/form-data">
+        
+        <!-- Hero Image -->
+        <div class="form-group" style="padding-bottom:20px; border-bottom:1px solid #444;">
+            <h3>Главный баннер вверху (Hero)</h3>
+            {% if has_hero %}
+                <div style="margin:10px 0;">
+                    <img src="{{ url_for('static', filename='uploads/portfolio/hero.jpg') }}" style="height:100px; border-radius:0;">
+                </div>
+            {% endif %}
+            <label>Загрузить новую</label>
+            <input type="file" name="hero_image" accept="image/*">
+        </div>
+
+        <!-- Private Events Image -->
+        <div class="form-group" style="padding:20px 0; border-bottom:1px solid #444;">
+            <h3>Плитка "Частные мероприятия"</h3>
+            {% if has_private %}
+                <div style="margin:10px 0;">
+                    <img src="{{ url_for('static', filename='uploads/portfolio/private_category.jpg') }}" style="height:100px; border-radius:0;">
+                </div>
+            {% endif %}
+            <label>Загрузить новую</label>
+            <input type="file" name="private_image" accept="image/*">
+        </div>
+
+        <!-- Corporate Events Image -->
+        <div class="form-group" style="padding:20px 0; border-bottom:1px solid #444;">
+            <h3>Плитка "Корпоративные мероприятия"</h3>
+            {% if has_corp %}
+                <div style="margin:10px 0;">
+                    <img src="{{ url_for('static', filename='uploads/portfolio/corp_category.jpg') }}" style="height:100px; border-radius:0;">
+                </div>
+            {% endif %}
+            <label>Загрузить новую</label>
+            <input type="file" name="corp_image" accept="image/*">
+        </div>
+
+        <!-- Process Image -->
+        <div class="form-group" style="padding-top:20px;">
+            <h3>Картинка для блока "Процесс работы"</h3>
+            {% if has_process %}
+                <div style="margin:10px 0;">
+                    <img src="{{ url_for('static', filename='uploads/portfolio/process.jpg') }}" style="height:100px; border-radius:0;">
+                </div>
+            {% endif %}
+            <label>Загрузить новую</label>
+            <input type="file" name="process_image" accept="image/*">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="margin-top:30px; font-size:16px;">Сохранить все изменения</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Event Decor{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar" id="navbar" style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: rgba(17, 17, 17, 0.85); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: space-between; padding: 20px 8%; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.3s;">
+        <a href="{{ url_for('home') }}" class="logo">EVENT DECOR</a>
+        
+        <div class="nav-links" style="display: flex; gap: 40px; align-items: center;">
+            <a href="/#categories" style="color: #EBE0C0; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;" onclick="if(window.location.pathname=='/') { document.querySelector('#categories').scrollIntoView({behavior: 'smooth'}); return false; }">Портфолио</a>
+            <a href="/#pricing" style="color: #EBE0C0; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;" onclick="if(window.location.pathname=='/') { document.querySelector('#pricing').scrollIntoView({behavior: 'smooth'}); return false; }">Прайс</a>
+            <a href="/#process-section" style="color: #EBE0C0; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;" onclick="if(window.location.pathname=='/') { document.querySelector('#process-section').scrollIntoView({behavior: 'smooth'}); return false; }">Процесс работы</a>
+            <a href="/#reviews-section" style="color: #EBE0C0; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;" onclick="if(window.location.pathname=='/') { document.querySelector('#reviews-section').scrollIntoView({behavior: 'smooth'}); return false; }">Отзывы</a>
+        </div>
+
+        <div class="contact-info">
+            <a href="tel:+79999999999" style="color: #FFF9DD; display:flex; align-items:center; gap:8px;">
+                <span style="font-size:12px; color:#F4932A; letter-spacing:1px; text-transform:uppercase;">WhatsApp</span>
+                <span>+7 999 999-99-99</span>
+            </a>
+        </div>
+    </nav>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer" style="background-color: #111111; border-top: none; padding: 100px 50px; display: flex; justify-content: space-between; gap: 50px;">
+        <div class="footer-left" style="flex: 1; max-width: 300px;">
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 32px; color: #FFF9DD; margin-bottom: 20px; font-weight: normal;">Контакты</h3>
+            <p style="color: #ccc; margin-bottom: 10px; font-size: 14px;">+7 999 999-99-99</p>
+            <p style="color: #ccc; margin-bottom: 10px; font-size: 14px;">yea21030403@gmail.com</p>
+        </div>
+        <div class="footer-right" style="flex: 1; max-width: 600px;">
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 32px; color: #FFF9DD; margin-bottom: 20px; font-weight: normal;">Будем рады с вами поработать!</h3>
+            <p class="footer-desc" style="color: #ccc; font-size: 14px; line-height: 1.6; margin-bottom: 30px;">Выберите подходящий формат связи или просто оставьте свои данные, и мы свяжемся с вами в самое ближайшее время.</p>
+            <form action="{{ url_for('submit_order') }}" method="POST" class="footer-form contact-form">
+                <input type="text" name="name" placeholder="Введите ваше имя" required>
+                <input type="text" name="phone" placeholder="Введите ваш номер" required>
+                <textarea name="message" placeholder="Кратко опишите ваш запрос(по желанию)" rows="3"></textarea>
+                <button type="submit">Оставить заявку</button>
+            </form>
+        </div>
+    </footer>
+</body>
+</html>

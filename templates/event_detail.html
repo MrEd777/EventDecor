@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ item.title }} - Декор | Event Decor{% endblock %}
+
+{% block content %}
+<section class="events-category-section container" style="padding-top: 50px;">
+    <div class="category-header" style="margin-bottom: 50px;">
+        <a href="{{ url_for('events_list', category=item.category) }}" style="color:#d4af37; text-decoration:none; font-family:'Montserrat', sans-serif; font-size:14px; text-transform:uppercase; letter-spacing:1px;">&larr; Вернуться назад</a>
+        <h1 style="margin-top:20px; font-family:'Cormorant Garamond', serif; font-size:42px; font-weight:normal; letter-spacing:2px; color:#fff;">
+            {{ item.title }}
+        </h1>
+        {% if item.description %}
+        <p style="max-width: 800px; margin: 0 auto; margin-top:20px; font-size: 16px; line-height: 1.6; color:#aaa; font-family:'Montserrat', sans-serif;">{{ item.description }}</p>
+        {% endif %}
+    </div>
+    
+    <div class="events-grid gallery-grid">
+        {% for photo in photos %}
+        <div class="gallery-item">
+            <img src="{{ photo.image_url }}" alt="Фото декора">
+        </div>
+        {% else %}
+        <p style="text-align:center; width:100%; color: #aaa;">Для этого мероприятия пока нет фотографий.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
