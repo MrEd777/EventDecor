@@ -1542,6 +1542,12 @@ a:hover {
 .btn-muted { background: #574D3E; color: white; }
 .btn-danger { background: #e74c3c; color: white; }
 .admin-max-width { max-width: 800px; }
+.max-logo-small {
+    height: 18px;
+    width: auto;
+    vertical-align: middle;
+    margin-right: 5px;
+}
 .mb-30 { margin-bottom: 30px; }
 .h-200 { height: 200px; }
 .obj-cover { object-fit: cover; }
