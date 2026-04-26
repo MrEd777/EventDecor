@@ -4,7 +4,7 @@
 
 {% block content %}
 {% set hero_bg = url_for('static', filename='uploads/portfolio/hero.jpg') if has_hero else 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format&fit=crop' %}
-<section class="hero-section" style="background: linear-gradient(to right, rgba(17,17,17,1) 0%, rgba(17,17,17,0.8) 40%, rgba(17,17,17,0.2) 100%), url('{{ hero_bg }}') no-repeat right center/cover; justify-content: flex-start;">
+<section class="hero-section" style="background: linear-gradient(to right, rgba(17,17,17,1) 0%, rgba(17,17,17,0.8) 40%, rgba(17,17,17,0.2) 100%), url('{{ hero_bg }}') no-repeat right center/cover;">
     
     <div class="hero-floating-box">
         <div class="hero-floating-box-icon">✱</div>
@@ -59,16 +59,16 @@
     <div class="category-grid">
         {% set corp_bg = url_for('static', filename='uploads/portfolio/corp_category.jpg') if has_corp else 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop' %}
         <a href="{{ url_for('events_list', category='corporate') }}" class="category-card" style="background-image: url('{{ corp_bg }}');">
-            <h3>КОРПОРАТИВНЫЕ<br><span style="font-family: 'Montserrat', sans-serif; font-size: 14px; text-transform: none; letter-spacing: normal;">Мероприятия</span></h3>
-            <div class="card-arrow" style="position:absolute; top: 40px; right: 40px; z-index:2; opacity: 0; transform: translate(-10px, 10px); transition: all 0.4s ease;">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FFF9DD" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <h3>КОРПОРАТИВНЫЕ<br><span class="category-card-subtitle">Мероприятия</span></h3>
+            <div class="card-arrow">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </div>
         </a>
         {% set private_bg = url_for('static', filename='uploads/portfolio/private_category.jpg') if has_private else 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop' %}
         <a href="{{ url_for('events_list', category='private') }}" class="category-card" style="background-image: url('{{ private_bg }}');">
-            <h3>ЧАСТНЫЕ<br><span style="font-family: 'Montserrat', sans-serif; font-size: 14px; text-transform: none; letter-spacing: normal;">Мероприятия</span></h3>
-            <div class="card-arrow" style="position:absolute; top: 40px; right: 40px; z-index:2; opacity: 0; transform: translate(-10px, 10px); transition: all 0.4s ease;">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FFF9DD" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <h3>ЧАСТНЫЕ<br><span class="category-card-subtitle">Мероприятия</span></h3>
+            <div class="card-arrow">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </div>
         </a>
     </div>
@@ -102,8 +102,8 @@
 
 <section class="process-section container" id="process-section">
     <h2>Процесс работы</h2>
-    <div style="text-align: center; margin-top:40px;">
-        <img src="{{ url_for('static', filename='uploads/portfolio/process.jpg') }}" onerror="this.src='https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop'" alt="Процесс работы" style="width: 100%; max-width:1000px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+    <div class="process-image-container">
+        <img src="{{ url_for('static', filename='uploads/portfolio/process.jpg') }}" onerror="this.src='https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop'" alt="Процесс работы" class="process-image">
     </div>
 </section>
 

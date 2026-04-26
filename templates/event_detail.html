@@ -3,20 +3,20 @@
 {% block title %}{{ item.title }} - Декор | Event Decor{% endblock %}
 
 {% block content %}
-<section class="events-category-section container" style="padding-top: 50px; padding-bottom: 100px;">
+<section class="events-category-section container gallery-page-container">
 
     <!-- Назад -->
-    <div style="margin-bottom: 30px;">
-        <a href="{{ url_for('events_list', category=item.category) }}" style="color:#d4af37; text-decoration:none; font-family:'Montserrat', sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:1px;">&#8592; Вернуться назад</a>
+    <div class="back-link-container">
+        <a href="{{ url_for('events_list', category=item.category) }}" class="back-link-gold">&#8592; Вернуться назад</a>
     </div>
 
     <!-- Заголовок по центру -->
-    <div style="text-align: center; margin-bottom: 40px;">
-        <h1 style="font-family:'Cormorant Garamond', serif; font-size:48px; font-weight:normal; letter-spacing:2px; color:#EBE0C0; margin-bottom: 20px;">
+    <div class="gallery-header">
+        <h1 class="gallery-title">
             {{ item.title }}
         </h1>
         {% if item.description %}
-        <p style="max-width: 700px; margin: 0 auto; font-size: 15px; line-height: 1.7; color:#aaa; font-family:'Montserrat', sans-serif;">{{ item.description }}</p>
+        <p class="gallery-desc">{{ item.description }}</p>
         {% endif %}
     </div>
 
@@ -30,7 +30,7 @@
             </div>
         </div>
         {% else %}
-        <p style="text-align:center; width:100%; color: #aaa; font-family:'Montserrat', sans-serif;">Для этого мероприятия пока нет фотографий.</p>
+        <p class="no-photos-msg">Для этого мероприятия пока нет фотографий.</p>
         {% endfor %}
     </div>
 </section>
@@ -45,144 +45,8 @@
     <button class="lb-btn lb-next" onclick="changePhoto(1)">&#8594;</button>
 </div>
 
-<style>
-/* Gallery Grid */
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.gallery-item {
-    position: relative;
-    border-radius: 16px;
-    overflow: hidden;
-    cursor: pointer;
-    aspect-ratio: 4/3;
-    background: #1a1a1a;
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.45s ease, filter 0.45s ease;
-}
-
-.gallery-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(17,17,17,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.35s ease;
-    border-radius: 16px;
-}
-
-.gallery-item:hover img {
-    transform: scale(1.06);
-    filter: brightness(0.75);
-}
-
-.gallery-item:hover .gallery-overlay {
-    opacity: 1;
-}
-
-/* Lightbox */
-#lightbox {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: rgba(10,10,10,0.92);
-    backdrop-filter: blur(8px);
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-}
-
-#lightbox.active {
-    display: flex;
-}
-
-.lb-content {
-    position: relative;
-    max-width: 85vw;
-    max-height: 85vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#lb-img {
-    max-width: 85vw;
-    max-height: 82vh;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-    object-fit: contain;
-    animation: lbFadeIn 0.3s ease;
-}
-
-@keyframes lbFadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to   { opacity: 1; transform: scale(1); }
-}
-
-.lb-close {
-    position: absolute;
-    top: -45px;
-    right: 0;
-    background: rgba(87,77,62,0.8);
-    border: none;
-    color: #FFF9DD;
-    font-size: 18px;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
-}
-
-.lb-close:hover { background: #F4932A; }
-
-.lb-btn {
-    background: rgba(87,77,62,0.8);
-    border: none;
-    color: #EBE0C0;
-    font-size: 26px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.25s, transform 0.2s;
-    flex-shrink: 0;
-}
-
-.lb-btn:hover {
-    background: #F4932A;
-    transform: scale(1.1);
-}
-
-@media (max-width: 768px) {
-    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-    .lb-btn { display: none !important; }
-    #lb-img { max-width: 95vw; max-height: 80vh; border-radius: 10px; }
-    .lb-close { top: -60px; right: 10px; }
-}
-
-@media (max-width: 480px) {
-    .gallery-grid { grid-template-columns: 1fr; }
-}
-</style>
+</div>
+{% endblock %}
 
 <div id="galleryData" data-photos='{{ photos | map(attribute="image_url") | list | tojson | safe }}' style="display:none;"></div>
 

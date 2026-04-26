@@ -18,33 +18,30 @@
         <div class="mobile-menu-btn" onclick="toggleMobileMenu()">&#9776;</div>
         
         <div class="nav-links">
-            <a href="/#categories" onclick="if(window.location.pathname=='/') { document.querySelector('#categories').scrollIntoView({behavior: 'smooth'}); return false; }">Портфолио</a>
-            <a href="/#pricing" onclick="if(window.location.pathname=='/') { document.querySelector('#pricing').scrollIntoView({behavior: 'smooth'}); return false; }">Прайс</a>
-            <a href="/#process-section" onclick="if(window.location.pathname=='/') { document.querySelector('#process-section').scrollIntoView({behavior: 'smooth'}); return false; }">Процесс работы</a>
-            <a href="/#reviews-section" onclick="if(window.location.pathname=='/') { document.querySelector('#reviews-section').scrollIntoView({behavior: 'smooth'}); return false; }">Отзывы</a>
+            <a href="/#categories" onclick="closeMobileMenu(); if(window.location.pathname=='/') { document.querySelector('#categories').scrollIntoView({behavior: 'smooth'}); return false; }">Портфолио</a>
+            <a href="/#pricing" onclick="closeMobileMenu(); if(window.location.pathname=='/') { document.querySelector('#pricing').scrollIntoView({behavior: 'smooth'}); return false; }">Прайс</a>
+            <a href="/#process-section" onclick="closeMobileMenu(); if(window.location.pathname=='/') { document.querySelector('#process-section').scrollIntoView({behavior: 'smooth'}); return false; }">Процесс работы</a>
+            <a href="/#reviews-section" onclick="closeMobileMenu(); if(window.location.pathname=='/') { document.querySelector('#reviews-section').scrollIntoView({behavior: 'smooth'}); return false; }">Отзывы</a>
         </div>
 
-        <div class="contact-info" style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
-            <!-- Phone: opens dialer on mobile, shows copy tooltip on desktop -->
-            <div style="display:flex; align-items:center; gap:12px;">
-                <!-- Max app icon placeholder -->
-                <a href="#" title="Max" style="display:flex; align-items:center; gap:5px; color:#F4932A; font-size:12px; letter-spacing:1px; text-transform:uppercase; text-decoration:none;">
+        <div class="contact-info">
+            <div class="contact-info-row">
+                <a href="#" title="Max" class="contact-link-gold">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F4932A" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M7 12h10M12 7v10"/></svg>
                     Max
                 </a>
                 <a href="tel:+79132168536"
                    onclick="if(!('ontouchstart' in window)){navigator.clipboard&&navigator.clipboard.writeText('+79132168536');var t=this.querySelector('span');var orig=t.textContent;t.textContent='Скопировано!';setTimeout(function(){t.textContent=orig;},1500);return false;}"
-                   style="color:#FFF9DD; font-size:15px; font-family:'Montserrat',sans-serif; text-decoration:none; display:flex; align-items:center; gap:6px;">
+                   class="contact-link-light">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F4932A" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 6.81a19.79 19.79 0 01-3.07-8.67A2 2 0 011.95 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
                     <span>+7 913 216-85-36</span>
                 </a>
             </div>
-            <!-- Email: opens mail client with pre-filled template -->
-            <a href="https://mail.google.com/mail/?view=cm&to=Yea21030403@gmail.com&su=%D0%97%D0%B0%D0%BA%D0%B0%D0%B7%20%D0%B4%D0%B5%D0%BA%D0%BE%D1%80%D0%B0%D1%86%D0%B8%D0%B9&body=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%0A%0A%D0%9C%D0%BE%D0%B5%20%D0%B8%D0%BC%D1%8F%3A%20%0A%D0%9C%D0%BE%D0%B9%20%D0%BD%D0%BE%D0%BC%D0%B5%D1%80%3A%20%0A%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%3A%20" target="_blank"
-               style="color:#EBE0C0; font-size:12px; font-family:'Montserrat',sans-serif; text-decoration:none; opacity:0.8; display:flex; align-items:center; gap:5px; transition:opacity 0.2s;"
-               onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#EBE0C0" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                Yea21030403@gmail.com
+            <a href="https://mail.google.com/mail/?view=cm&to=yea21030403@gmail.com"
+               target="_blank"
+               class="contact-link-muted">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F4932A" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                yea21030403@gmail.com
             </a>
         </div>
     </nav>
@@ -85,6 +82,10 @@
     <script>
         function toggleMobileMenu() {
             document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            document.querySelector('.nav-links').classList.remove('active');
         }
 
         function copyToClipboard(text) {
