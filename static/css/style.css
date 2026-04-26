@@ -141,8 +141,8 @@ a:hover {
 .btn-primary {
     display: inline-block;
     padding: 15px 30px;
-    background-color: #FFF9DD;
-    color: var(--bg-dark) !important;
+    background-color: #FFF9DD !important;
+    color: #111111 !important;
     font-weight: 600;
     text-transform: uppercase;
     font-size: 14px;
@@ -159,8 +159,8 @@ a:hover {
 .btn-secondary {
     display: inline-block;
     padding: 14px 30px;
-    background-color: #FFF9DD;
-    color: var(--bg-dark) !important;
+    background-color: #FFF9DD !important;
+    color: #111111 !important;
     font-weight: 600;
     text-transform: uppercase;
     font-size: 14px;
@@ -170,7 +170,7 @@ a:hover {
     transition: all 0.3s;
 }
 .btn-secondary:hover {
-    background-color: #d1c7aa;
+    background-color: var(--gold) !important;
 }
 
 /* Hero Section */
@@ -684,8 +684,8 @@ a:hover {
     appearance: none;
 }
 .contact-form button {
-    background: #ebdcc3;
-    color: #111111;
+    background: #FFF9DD !important;
+    color: #111111 !important;
     border: none;
     border-radius: 8px;
     padding: 20px;
@@ -698,7 +698,7 @@ a:hover {
     text-transform: uppercase;
 }
 .contact-form button:hover {
-    background: var(--gold);
+    background: var(--gold) !important;
 }
 .contact-info h2 {
     font-family: 'Cormorant Garamond', serif;

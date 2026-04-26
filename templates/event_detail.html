@@ -174,8 +174,9 @@
 
 @media (max-width: 768px) {
     .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-    .lb-btn { width: 44px; height: 44px; font-size: 20px; }
-    #lb-img { max-width: 90vw; max-height: 75vh; }
+    .lb-btn { display: none !important; }
+    #lb-img { max-width: 95vw; max-height: 80vh; border-radius: 10px; }
+    .lb-close { top: -60px; right: 10px; }
 }
 
 @media (max-width: 480px) {
@@ -230,5 +231,25 @@
         if (e.key === 'ArrowRight') changePhoto(1);
         if (e.key === 'Escape') closeLightbox();
     });
+
+    // Swipe handling
+    let touchstartX = 0;
+    let touchendX = 0;
+
+    const lb = document.getElementById('lightbox');
+    lb.addEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    lb.addEventListener('touchend', e => {
+        touchendX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, {passive: true});
+
+    function handleSwipe() {
+        const threshold = 50;
+        if (touchendX < touchstartX - threshold) changePhoto(1);
+        if (touchendX > touchstartX + threshold) changePhoto(-1);
+    }
 </script>
 {% endblock %}
