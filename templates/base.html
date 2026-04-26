@@ -12,7 +12,9 @@
 </head>
 <body>
     <nav class="navbar" id="navbar">
-        <a href="{{ url_for('home') }}" class="logo">EVENT DECOR</a>
+        <a href="{{ url_for('home') }}" class="logo">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Lesya Kireeva Event Decor" class="logo-img">
+        </a>
         <div class="mobile-menu-btn" onclick="toggleMobileMenu()">&#9776;</div>
         
         <div class="nav-links">

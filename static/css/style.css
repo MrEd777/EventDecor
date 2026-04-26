@@ -69,10 +69,13 @@ a:hover {
     transition: background 0.3s;
 }
 .logo {
-    font-family: var(--font-heading);
-    font-size: 28px;
-    color: var(--gold);
-    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+}
+.logo-img {
+    height: 60px;
+    width: auto;
+    display: block;
 }
 
 .nav-links {
@@ -138,7 +141,7 @@ a:hover {
 .btn-primary {
     display: inline-block;
     padding: 15px 30px;
-    background-color: var(--gold);
+    background-color: #FFF9DD;
     color: var(--bg-dark) !important;
     font-weight: 600;
     text-transform: uppercase;
@@ -148,18 +151,15 @@ a:hover {
     cursor: pointer;
     transition: background 0.3s;
 }
-.btn-primary:hover {
-    background-color: #fff !important; /* Making it white or lighter on hover can be nice, but user specifically asked for "same as form" */
-    filter: brightness(1.1);
-}
 .btn-primary:hover, .btn-secondary:hover, .hero-btn-main:hover {
     background-color: var(--gold) !important;
     color: #111 !important;
+    filter: none;
 }
 .btn-secondary {
     display: inline-block;
     padding: 14px 30px;
-    background-color: var(--text-muted); /* #EBE0C0 */
+    background-color: #FFF9DD;
     color: var(--bg-dark) !important;
     font-weight: 600;
     text-transform: uppercase;
@@ -833,6 +833,10 @@ a:hover {
         text-align: center !important;
     }
 
+    .logo-img {
+        height: 45px;
+    }
+
     .hero-text-content {
         max-width: 100% !important;
     }
@@ -887,9 +891,21 @@ a:hover {
         padding-bottom: 40px;
     }
     
-    .category-grid, .events-grid, .contact-grid {
+    .category-grid, .contact-grid {
         grid-template-columns: 1fr;
         gap: 20px;
+    }
+
+    .events-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 20px;
+    }
+
+    .event-grid-card {
+        width: 100% !important;
+        max-width: 500px !important;
     }
     
     .category-card {
