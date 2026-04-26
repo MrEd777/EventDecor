@@ -23,8 +23,8 @@
         <div class="form-group">
             <label for="image_file">Аватарка мероприятия (для плитки) *</label>
             {% if item and item.image_url %}
-                <div class="current-image" style="margin-bottom: 10px;">
-                    <img src="{{ item.image_url }}" alt="Текущее изображение" style="max-height: 150px; border-radius: 0;">
+                <div class="current-image-preview">
+                    <img src="{{ item.image_url }}" alt="Текущее изображение">
                 </div>
                 <input type="file" id="image_file" name="image_file" accept="image/*">
                 <small>Загрузите фото. Выберите файл только если хотите заменить текущее изображение.</small>
@@ -39,20 +39,20 @@
             <textarea id="description" name="description" rows="5" placeholder="Опишите работу...">{{ item.description if item else '' }}</textarea>
         </div>
 
-        <div class="form-group" style="margin-top:30px; border-top: 1px solid #444; padding-top:20px;">
+        <div class="form-group mt-30 border-top-thin pt-20">
             <label for="photos">Галерея мероприятия (внутренние фотографии)</label>
             <input type="file" id="photos" name="photos" accept="image/*" multiple>
             <small>Вы можете выделить несколько фотографий разом.</small>
             
             {% if photos %}
-            <div style="margin-top: 20px;">
+            <div class="mt-20">
                 <p>Уже загруженные:</p>
-                <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
+                <div class="gallery-admin-list">
                     {% for photo in photos %}
-                    <div style="position:relative; width: 100px; height: 100px;">
-                        <img src="{{ photo.image_url }}" alt="фото" style="width:100%; height:100%; object-fit:cover; border-radius: 0;">
+                    <div class="gallery-admin-item">
+                        <img src="{{ photo.image_url }}" alt="фото">
                         <!-- Submit via external form -->
-                        <button type="submit" form="delete-form-{{ photo.id }}" style="position:absolute; top:2px; right:2px; background:red; color:white; border:none; border-radius:0; width:20px; height:20px; cursor:pointer;" onclick="if(!confirm('Удалить фото?')) event.preventDefault();">&times;</button>
+                        <button type="submit" form="delete-form-{{ photo.id }}" class="gallery-item-delete" onclick="if(!confirm('Удалить фото?')) event.preventDefault();">&times;</button>
                     </div>
                     {% endfor %}
                 </div>
@@ -60,7 +60,7 @@
             {% endif %}
         </div>
 
-        <div class="form-actions" style="margin-top:20px;">
+        <div class="form-actions mt-20">
             <button type="submit" class="btn btn-primary btn-large">{{ 'Сохранить изменения' if item else 'Добавить' }}</button>
             <a href="{{ url_for('admin_portfolio') }}" class="btn btn-secondary btn-large">Отмена</a>
         </div>
@@ -70,7 +70,7 @@
 <!-- Forms for inline photo deletion -->
 {% if photos %}
     {% for photo in photos %}
-    <form id="delete-form-{{ photo.id }}" method="POST" action="{{ url_for('admin_portfolio_photo_delete', photo_id=photo.id) }}" style="display:none;"></form>
+    <form id="delete-form-{{ photo.id }}" method="POST" action="{{ url_for('admin_portfolio_photo_delete', photo_id=photo.id) }}" class="d-none"></form>
     {% endfor %}
 {% endif %}
 

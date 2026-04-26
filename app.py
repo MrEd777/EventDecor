@@ -1,9 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from datetime import datetime
 import os
-import uuid
 from functools import wraps
 from werkzeug.utils import secure_filename
 

@@ -4,9 +4,9 @@
 {% block page_title %}Портфолио{% endblock %}
 
 {% block content %}
-<div class="admin-header-actions" style="display:flex; gap:15px;">
+<div class="admin-header-actions d-flex gap-15">
     <a href="{{ url_for('admin_portfolio_add') }}" class="btn btn-primary">+ Добавить работу</a>
-    <a href="{{ url_for('admin_settings') }}" class="btn btn-secondary" style="background:#574D3E; color:white;">Настройки сайта</a>
+    <a href="{{ url_for('admin_settings') }}" class="btn btn-muted">Настройки сайта</a>
 </div>
 
 <div class="portfolio-admin-grid">
@@ -25,7 +25,7 @@
             <p class="portfolio-admin-description">{{ item.description[:100] }}{% if item.description|length > 100 %}...{% endif %}</p>
             <div class="portfolio-admin-actions">
                 <a href="{{ url_for('admin_portfolio_edit', id=item.id) }}" class="btn btn-sm btn-primary">Ред. Фото/Текст</a>
-                <form method="POST" action="{{ url_for('admin_portfolio_delete', id=item.id) }}" style="display: inline;" onsubmit="return confirm('Вы уверены, что хотите удалить эту работу?')">
+                <form method="POST" action="{{ url_for('admin_portfolio_delete', id=item.id) }}" class="d-inline" onsubmit="return confirm('Вы уверены, что хотите удалить эту работу?')">
                     <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
                 </form>
             </div>

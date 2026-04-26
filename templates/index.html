@@ -4,7 +4,7 @@
 
 {% block content %}
 {% set hero_bg = url_for('static', filename='uploads/portfolio/hero.jpg') if has_hero else 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format&fit=crop' %}
-<section class="hero-section" style="background: linear-gradient(to right, rgba(17,17,17,1) 0%, rgba(17,17,17,0.8) 40%, rgba(17,17,17,0.2) 100%), url('{{ hero_bg }}') no-repeat right center/cover;">
+<section class="hero-section" style="--hero-bg: url('{{ hero_bg }}');">
     
     <div class="hero-floating-box">
         <div class="hero-floating-box-icon">✱</div>
@@ -133,6 +133,7 @@
             </div>
             <!-- Right inside card -->
             <div class="review-text-container">
+                <div id="galleryData" data-photos='{{ photos | map(attribute="image_url") | list | tojson | safe }}' class="d-none"></div>
                 <p id="reviewText" class="review-text"></p>
             </div>
         </div>
