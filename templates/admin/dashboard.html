@@ -42,7 +42,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Имя</th>
-                    <th>Телефон</th>
+                    <th>Тип</th>
+                    <th>Бюджет</th>
                     <th>Дата</th>
                     <th>Статус</th>
                     <th>Действия</th>
@@ -53,8 +54,9 @@
                 <tr>
                     <td>#{{ order.id }}</td>
                     <td>{{ order.name }}</td>
-                    <td>{{ order.phone }}</td>
-                    <td>{{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+                    <td>{{ order.event_type or '—' }}{% if order.sub_type %} ({{ order.sub_type }}){% endif %}</td>
+                    <td>{{ order.budget or '—' }}</td>
+                    <td>{{ order.created_at.strftime('%d.%m.%Y') }}</td>
                     <td>
                         <span class="status-badge status-{{ order.status }}">
                             {% if order.status == 'new' %}Новая
@@ -68,7 +70,7 @@
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="6" class="no-data">Заявок пока нет</td>
+                    <td colspan="7" class="no-data">Заявок пока нет</td>
                 </tr>
                 {% endfor %}
             </tbody>

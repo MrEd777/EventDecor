@@ -31,9 +31,10 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
-    email = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), default='')
     event_date = db.Column(db.String(50))
     event_type = db.Column(db.String(50))
+    sub_type = db.Column(db.String(50))
     budget = db.Column(db.String(50))
     message = db.Column(db.Text)
     status = db.Column(db.String(20), default='new')  # new, completed, cancelled
@@ -105,8 +106,10 @@ def submit_order():
         order = Order(
             name=request.form.get('name'),
             phone=request.form.get('phone'),
-            email='',
+            email=request.form.get('email', ''),
             event_type=request.form.get('event_type'),
+            sub_type=request.form.get('sub_type'),
+            budget=request.form.get('budget'),
             message=request.form.get('message')
         )
         db.session.add(order)
@@ -131,7 +134,10 @@ def send_order_email(order):
 
 Имя: {order.name}
 Телефон: {order.phone}
+Email: {order.email or 'Не указан'}
 Тип мероприятия: {order.event_type or 'Не указан'}
+Подтип: {order.sub_type or 'Не указан'}
+Бюджет: {order.budget or 'Не указан'}
 Сообщение: {order.message or 'Нет'}
 
 Дата создания: {order.created_at}

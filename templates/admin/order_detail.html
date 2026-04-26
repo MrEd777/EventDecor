@@ -31,15 +31,27 @@
                     <label>Телефон:</label>
                     <span>{{ order.phone }}</span>
                 </div>
+                <div class="detail-item">
+                    <label>Email:</label>
+                    <span>{{ order.email or '—' }}</span>
+                </div>
             </div>
         </div>
 
         <div class="detail-section">
-            <h3>Тип мероприятия</h3>
+            <h3>Детали мероприятия</h3>
             <div class="detail-grid">
                 <div class="detail-item">
-                    <label>Тип:</label>
-                    <span>{{ order.event_type or 'Не указан' }}</span>
+                    <label>Основной тип:</label>
+                    <span>{{ order.event_type or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Подтип:</label>
+                    <span>{{ order.sub_type or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Планируемый бюджет:</label>
+                    <span>{{ order.budget or '—' }}</span>
                 </div>
             </div>
         </div>
