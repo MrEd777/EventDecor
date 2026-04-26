@@ -1,0 +1,106 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Прайс{% endblock %}
+{% block page_title %}Управление прайс-листом{% endblock %}
+
+{% block content %}
+<div class="dashboard-section" style="margin-bottom: 40px; border-radius: 0;">
+    <div class="section-header">
+        <h2>Добавить новую услугу</h2>
+    </div>
+    <form action="{{ url_for('admin_pricing') }}" method="POST" class="admin-form form-container" style="max-width: 100%; border-radius: 0;">
+        <div style="display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap;">
+            <div class="form-group" style="flex: 1; min-width: 200px; margin-bottom: 0;">
+                <label>Категория</label>
+                <select name="category" required style="border-radius: 0;">
+                    <option value="private">Частные мероприятия</option>
+                    <option value="corporate">Корпоративные мероприятия</option>
+                </select>
+            </div>
+            <div class="form-group" style="flex: 2; min-width: 250px; margin-bottom: 0;">
+                <label>Название услуги</label>
+                <input type="text" name="name" required style="border-radius: 0;" placeholder="Например: Свадебное оформление">
+            </div>
+            <div class="form-group" style="flex: 1; min-width: 150px; margin-bottom: 0;">
+                <label>Цена</label>
+                <input type="text" name="price" required style="border-radius: 0;" placeholder="Например: от 150 000 ₽">
+            </div>
+            <div class="form-actions" style="margin-top: 0;">
+                <button type="submit" class="btn btn-primary" style="height: 47px; border-radius: 0;">Добавить</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div style="display: flex; gap: 40px; flex-wrap: wrap;">
+    <!-- Частные -->
+    <div class="dashboard-section" style="flex: 1; min-width: 300px; border-radius: 0;">
+        <div class="section-header">
+            <h2>Частные мероприятия</h2>
+        </div>
+        <div class="table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Услуга</th>
+                        <th>Цена</th>
+                        <th style="width: 100px;">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in private_items %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>
+                            <form action="{{ url_for('admin_pricing_delete', id=item.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Удалить эту услугу?');">
+                                <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 0;">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3" class="no-data">Услуг пока нет</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Корпоративные -->
+    <div class="dashboard-section" style="flex: 1; min-width: 300px; border-radius: 0;">
+        <div class="section-header">
+            <h2>Корпоративные мероприятия</h2>
+        </div>
+        <div class="table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Услуга</th>
+                        <th>Цена</th>
+                        <th style="width: 100px;">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in corporate_items %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>
+                            <form action="{{ url_for('admin_pricing_delete', id=item.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Удалить эту услугу?');">
+                                <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 0;">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3" class="no-data">Услуг пока нет</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

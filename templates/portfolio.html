@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Event Decor - Портфолио{% endblock %}
+
+{% block content %}
+<section class="portfolio-page">
+    <div class="container">
+        <h1>Наши работы</h1>
+        
+        <div class="portfolio-filters">
+            <a href="{{ url_for('portfolio') }}" class="filter-btn {% if not request.args.get('category') %}active{% endif %}">Все</a>
+            <a href="{{ url_for('portfolio', category='wedding') }}" class="filter-btn {% if request.args.get('category') == 'wedding' %}active{% endif %}">Свадьбы</a>
+            <a href="{{ url_for('portfolio', category='birthday') }}" class="filter-btn {% if request.args.get('category') == 'birthday' %}active{% endif %}">Дни рождения</a>
+            <a href="{{ url_for('portfolio', category='corporate') }}" class="filter-btn {% if request.args.get('category') == 'corporate' %}active{% endif %}">Корпоративы</a>
+            <a href="{{ url_for('portfolio', category='other') }}" class="filter-btn {% if request.args.get('category') == 'other' %}active{% endif %}">Другое</a>
+        </div>
+
+        <div class="portfolio-grid">
+            {% for item in portfolio_items %}
+            <div class="portfolio-item">
+                <img src="{{ item.image_url }}" alt="{{ item.title }}">
+                <div class="portfolio-overlay">
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.description }}</p>
+                    <span class="category-tag">{{ item.category }}</span>
+                </div>
+            </div>
+            {% else %}
+            <p class="no-items">В этой категории пока нет работ</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

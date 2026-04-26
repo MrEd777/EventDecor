@@ -1,0 +1,73 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Заявка #{{ order.id }}{% endblock %}
+{% block page_title %}Заявка #{{ order.id }}{% endblock %}
+
+{% block content %}
+<div class="order-detail">
+    <div class="order-header">
+        <div class="order-info">
+            <h2>Информация о заявке</h2>
+            <p>Создана: {{ order.created_at.strftime('%d.%m.%Y в %H:%M') }}</p>
+        </div>
+        <div class="order-status">
+            <span class="status-badge status-{{ order.status }}">
+                {% if order.status == 'new' %}Новая
+                {% elif order.status == 'completed' %}Завершена
+                {% elif order.status == 'cancelled' %}Отменена{% endif %}
+            </span>
+        </div>
+    </div>
+
+    <div class="order-content">
+        <div class="detail-section">
+            <h3>Контактная информация</h3>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <label>Имя:</label>
+                    <span>{{ order.name }}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Телефон:</label>
+                    <span>{{ order.phone }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <h3>Тип мероприятия</h3>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <label>Тип:</label>
+                    <span>{{ order.event_type or 'Не указан' }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <h3>Сообщение клиента</h3>
+            <div class="detail-message">
+                {{ order.message or 'Нет сообщения' }}
+            </div>
+        </div>
+
+        <div class="order-actions">
+            <form method="POST" action="{{ url_for('admin_update_order_status', id=order.id) }}" class="status-form">
+                <label>Изменить статус:</label>
+                <select name="status">
+                    <option value="new" {% if order.status == 'new' %}selected{% endif %}>Новая</option>
+                    <option value="completed" {% if order.status == 'completed' %}selected{% endif %}>Завершена</option>
+                    <option value="cancelled" {% if order.status == 'cancelled' %}selected{% endif %}>Отменена</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Обновить статус</button>
+            </form>
+
+            <form method="POST" action="{{ url_for('admin_delete_order', id=order.id) }}" class="delete-form" onsubmit="return confirm('Вы уверены, что хотите удалить эту заявку?')">
+                <button type="submit" class="btn btn-danger">Удалить заявку</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<a href="{{ url_for('admin_orders') }}" class="btn btn-secondary">← Назад к списку</a>
+{% endblock %}

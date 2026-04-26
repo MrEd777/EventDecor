@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if category == 'private' %}ЧАСТНЫЕ МЕРОПРИЯТИЯ{% else %}КОРПОРАТИВНЫЕ МЕРОПРИЯТИЯ{% endif %} | Event Decor
+{% endblock %}
+
+{% block content %}
+<section class="events-category-section container">
+    <div class="category-header">
+        <h1>
+            {% if category == 'private' %}ЧАСТНЫЕ{% else %}КОРПОРАТИВНЫЕ{% endif %}
+            <br><span>Мероприятия</span>
+        </h1>
+    </div>
+    
+    <div class="events-grid">
+        {% for item in portfolio_items %}
+        <a href="{{ url_for('event_detail', id=item.id) }}" class="event-grid-card">
+            <div class="event-image">
+                <img src="{{ item.image_url }}" alt="{{ item.title }}">
+            </div>
+            <div class="event-overlay">
+                <h3>{{ item.title }}</h3>
+            </div>
+        </a>
+        {% else %}
+        <p style="text-align:center; width:100%; color: #aaa; margin-top: 50px;">В этой категории пока нет опубликованных мероприятий.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

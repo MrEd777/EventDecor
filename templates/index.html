@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block title %}Агентство событийного декора | Event Decor{% endblock %}
+
+{% block content %}
+{% set hero_bg = url_for('static', filename='uploads/portfolio/hero.jpg') if has_hero else 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format&fit=crop' %}
+<section class="hero-section" style="background: linear-gradient(to right, rgba(17,17,17,1) 0%, rgba(17,17,17,0.8) 40%, rgba(17,17,17,0.2) 100%), url('{{ hero_bg }}') no-repeat right center/cover; justify-content: flex-start;">
+    
+    <div class="hero-floating-box">
+        <div class="hero-floating-box-icon">✱</div>
+        <div class="hero-floating-box-text">За 72 часа — от звонка до установленных декораций!</div>
+    </div>
+
+    <div class="container hero-container">
+        <div class="hero-text-content">
+            <h1 class="hero-title">ПОГРУЗИТЕСЬ В МИР<br>ИСКЛЮЧИТЕЛЬНОЙ ЭСТЕТИКИ</h1>
+            <p class="hero-subtitle">Отражаем вашу личность в деталях и создаем атмосферу через авторский декор. Наполняем пространство красотой и превращаем ваше событие в живую историю</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-secondary hero-btn-main" onclick="document.querySelector('.footer').scrollIntoView({behavior: 'smooth'}); return false;">Заказать консультацию</a>
+                <a href="#categories" class="hero-btn-link" onclick="document.querySelector('#categories').scrollIntoView({behavior: 'smooth'}); return false;">Перейти к портфолио</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="categories-section container" id="categories">
+    <!-- Mission block -->
+    <div class="about-header">
+        <h2 class="about-title">Наша миссия — превращать ваши идеи в живое искусство декора</h2>
+        <p class="about-subtitle">Мы создаем уникальную среду, где форма и цвет подчеркивают статус события, а узкая специализация на декоре гарантирует идеальную реализацию любой концепции.</p>
+    </div>
+
+    <!-- Stats and Quote Block -->
+    <div class="about-stats-container">
+        <!-- Right-aligned Stats -->
+        <div class="about-stats-flex">
+            <div class="about-stat-item">
+                <span class="about-stat-num">850+</span>
+                <span class="about-stat-text">видов<br>декоративных<br>элементов</span>
+            </div>
+            <div class="about-stat-item">
+                <span class="about-stat-num">8</span>
+                <span class="about-stat-text">лет<br>опыта<br>на рынке</span>
+            </div>
+            <div class="about-stat-item">
+                <span class="about-stat-num">450+</span>
+                <span class="about-stat-text">праздников<br>и событий</span>
+            </div>
+        </div>
+
+        <!-- Left-aligned Quote Box -->
+        <div class="about-quote-box">
+            <span class="about-quote-icon">✱</span>
+            <span class="about-quote-text">Меняем пространство,<br>оставляя смыслы</span>
+        </div>
+    </div>
+
+    <div class="category-grid">
+        {% set corp_bg = url_for('static', filename='uploads/portfolio/corp_category.jpg') if has_corp else 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop' %}
+        <a href="{{ url_for('events_list', category='corporate') }}" class="category-card" style="background-image: url('{{ corp_bg }}');">
+            <h3>КОРПОРАТИВНЫЕ<br><span style="font-family: 'Montserrat', sans-serif; font-size: 14px; text-transform: none; letter-spacing: normal;">Мероприятия</span></h3>
+            <div class="card-arrow" style="position:absolute; top: 40px; right: 40px; z-index:2; opacity: 0; transform: translate(-10px, 10px); transition: all 0.4s ease;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FFF9DD" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+        </a>
+        {% set private_bg = url_for('static', filename='uploads/portfolio/private_category.jpg') if has_private else 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop' %}
+        <a href="{{ url_for('events_list', category='private') }}" class="category-card" style="background-image: url('{{ private_bg }}');">
+            <h3>ЧАСТНЫЕ<br><span style="font-family: 'Montserrat', sans-serif; font-size: 14px; text-transform: none; letter-spacing: normal;">Мероприятия</span></h3>
+            <div class="card-arrow" style="position:absolute; top: 40px; right: 40px; z-index:2; opacity: 0; transform: translate(-10px, 10px); transition: all 0.4s ease;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FFF9DD" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+        </a>
+    </div>
+</section>
+
+<section class="pricing-section container" id="pricing">
+    <h2>Стоимость услуг</h2>
+    <div class="pricing-flex">
+        <div class="pricing-col">
+            <h3>Частные мероприятия</h3>
+            <ul>
+                {% for item in private_pricing %}
+                <li>{{ item.name }} <span>{{ item.price }}</span></li>
+                {% else %}
+                <li>Услуги пока не добавлены <span>-</span></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="pricing-col">
+            <h3>Корпоративные мероприятия</h3>
+            <ul>
+                {% for item in corp_pricing %}
+                <li>{{ item.name }} <span>{{ item.price }}</span></li>
+                {% else %}
+                <li>Услуги пока не добавлены <span>-</span></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="process-section container" id="process-section">
+    <h2>Процесс работы</h2>
+    <div style="text-align: center; margin-top:40px;">
+        <img src="{{ url_for('static', filename='uploads/portfolio/process.jpg') }}" onerror="this.src='https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop'" alt="Процесс работы" style="width: 100%; max-width:1000px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+    </div>
+</section>
+
+<section class="reviews-section container" id="reviews-section">
+    <!-- Left column: Title and Controls -->
+    <div class="reviews-controls">
+        <h2 class="reviews-title">Они говорят...</h2>
+        <div class="reviews-buttons-container">
+            <button id="prevReview" class="review-btn">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+            </button>
+            <button id="nextReview" class="review-btn">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Right column: The Card -->
+    <div class="reviews-card-container">
+        <div id="reviewCounter" class="review-counter">1/4</div>
+        <div id="reviewContent" class="review-content-flex">
+            <!-- Left inside card -->
+            <div class="review-avatar-container">
+                <img id="reviewAvatar" src="" class="review-avatar-img">
+                <div id="reviewAuthor" class="review-author">Имя Фамилия</div>
+                <div id="reviewSubtitle" class="review-subtitle">Субтитл</div>
+            </div>
+            <!-- Right inside card -->
+            <div class="review-text-container">
+                <p id="reviewText" class="review-text"></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const reviews = [
+        {
+            avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=256&auto=format&fit=crop',
+            text: 'Заказывала оформление на свой день рождения и осталась в полном восторге. Декорации выглядели безумно стильно и дорого, именно так, как я себе и представляла. Каждая деталь была продумана до мелочей, поэтому фотозоны получились просто волшебными — все гости не могли оторваться от камер. Огромное спасибо команде за пунктуальность и за то, что создали такую невероятную атмосферу праздника!',
+            author: 'Мария Иванова',
+            subtitle: 'Заказывала декорации к своему дню рождения'
+        },
+        {
+            avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=256&auto=format&fit=crop',
+            text: 'Оформляли корпоратив нашей компании на 200 человек. Задача была сложная: уложиться в дедлайн и соблюсти строгий брендбук, но ребята справились на все 100%. Мы получили полностью стилизованную вечеринку с роскошными золотыми акцентами. Все коллеги обсуждают это уже неделю!',
+            author: 'ООО "Инновации"',
+            subtitle: 'Корпоративное мероприятие'
+        },
+        {
+            avatar: 'https://images.unsplash.com/photo-1601288496920-b6154fe3626a?q=80&w=256&auto=format&fit=crop',
+            text: 'Большое спасибо за восхитительный декор для нашей свадьбы. Цветы, центральные композиции, президиум — все было продумано до мелочей. Мы с мужем даже прослезились, когда впервые зашли в зал. Вы помогли создать настоящую сказку.',
+            author: 'Елена и Артем',
+            subtitle: 'Свадебное оформление'
+        },
+        {
+            avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop',
+            text: 'Обратились чтобы оформить небольшую гендер-пати. Потрясающая фотозона и воздушные шары, все в идеальных тонах. Было очень приятно с вами работать: всё вовремя, без лишних вопросов, а результат превзошел ожидания.',
+            author: 'Семья Смирновых',
+            subtitle: 'Гендер-пати'
+        }
+    ];
+
+    let cr = 0;
+    const contentDiv = document.getElementById('reviewContent');
+    const prevBtn = document.getElementById('prevReview');
+    const nextBtn = document.getElementById('nextReview');
+
+    function showReq(idx) {
+        contentDiv.style.opacity = 0;
+        setTimeout(() => {
+            document.getElementById('reviewCounter').innerText = (idx + 1) + '/' + reviews.length;
+            document.getElementById('reviewAvatar').src = reviews[idx].avatar;
+            document.getElementById('reviewAuthor').innerText = reviews[idx].author;
+            document.getElementById('reviewSubtitle').innerText = reviews[idx].subtitle;
+            document.getElementById('reviewText').innerText = reviews[idx].text;
+            contentDiv.style.opacity = 1;
+        }, 300);
+    }
+    
+    prevBtn.addEventListener('click', () => { 
+        cr = (cr === 0) ? reviews.length-1 : cr-1; 
+        showReq(cr); 
+    });
+    nextBtn.addEventListener('click', () => { 
+        cr = (cr === reviews.length-1) ? 0 : cr+1; 
+        showReq(cr); 
+    });
+    
+    window.addEventListener('DOMContentLoaded', () => showReq(0));
+</script>
+{% endblock %}

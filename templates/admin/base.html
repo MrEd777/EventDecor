@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin{% endblock %} - Event Decor Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="admin-body">
+    <div class="admin-wrapper">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <h2>Event Decor Admin</h2>
+            </div>
+            <nav class="admin-nav">
+                <a href="{{ url_for('admin_dashboard') }}" class="admin-nav-link {% if request.endpoint == 'admin_dashboard' %}active{% endif %}">
+                    Дашборд
+                </a>
+                <a href="{{ url_for('admin_orders') }}" class="admin-nav-link {% if request.endpoint == 'admin_orders' or request.endpoint == 'admin_order_detail' %}active{% endif %}">
+                    Заявки
+                    {% set new_count = namespace(value=0) %}
+                    {% for order in get_flashed_messages() %}{% endfor %}
+                </a>
+                <a href="{{ url_for('admin_portfolio') }}" class="admin-nav-link {% if request.endpoint == 'admin_portfolio' or request.endpoint == 'admin_portfolio_add' or request.endpoint == 'admin_portfolio_edit' %}active{% endif %}">
+                    Портфолио
+                </a>
+                <a href="{{ url_for('admin_pricing') }}" class="admin-nav-link {% if request.endpoint == 'admin_pricing' %}active{% endif %}">
+                    Прайс
+                </a>
+                <a href="{{ url_for('home') }}" class="admin-nav-link" target="_blank">
+                    На сайт
+                </a>
+                <a href="{{ url_for('admin_logout') }}" class="admin-nav-link logout">
+                    Выйти
+                </a>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1>{% block page_title %}Панель управления{% endblock %}</h1>
+                {% if session.get('admin_username') %}
+                <span class="admin-user">{{ session.admin_username }}</span>
+                {% endif %}
+            </header>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

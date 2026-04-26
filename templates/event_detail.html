@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ item.title }} - Декор | Event Decor{% endblock %}
+
+{% block content %}
+<section class="events-category-section container" style="padding-top: 50px; padding-bottom: 100px;">
+
+    <!-- Назад -->
+    <div style="margin-bottom: 30px;">
+        <a href="{{ url_for('events_list', category=item.category) }}" style="color:#d4af37; text-decoration:none; font-family:'Montserrat', sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:1px;">&#8592; Вернуться назад</a>
+    </div>
+
+    <!-- Заголовок по центру -->
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h1 style="font-family:'Cormorant Garamond', serif; font-size:48px; font-weight:normal; letter-spacing:2px; color:#EBE0C0; margin-bottom: 20px;">
+            {{ item.title }}
+        </h1>
+        {% if item.description %}
+        <p style="max-width: 700px; margin: 0 auto; font-size: 15px; line-height: 1.7; color:#aaa; font-family:'Montserrat', sans-serif;">{{ item.description }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Галерея -->
+    <div class="gallery-grid">
+        {% for photo in photos %}
+        <div class="gallery-item" data-index="{{ loop.index0 }}">
+            <img src="{{ photo.image_url }}" alt="Фото декора">
+            <div class="gallery-overlay">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FFF9DD" stroke-width="1.5"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg>
+            </div>
+        </div>
+        {% else %}
+        <p style="text-align:center; width:100%; color: #aaa; font-family:'Montserrat', sans-serif;">Для этого мероприятия пока нет фотографий.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="closeLightboxOutside(event)">
+    <button class="lb-btn lb-prev" onclick="changePhoto(-1)">&#8592;</button>
+    <div class="lb-content">
+        <button class="lb-close" onclick="closeLightbox()">&#10005;</button>
+        <img id="lb-img" src="" alt="">
+    </div>
+    <button class="lb-btn lb-next" onclick="changePhoto(1)">&#8594;</button>
+</div>
+
+<style>
+/* Gallery Grid */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 4/3;
+    background: #1a1a1a;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.45s ease, filter 0.45s ease;
+}
+
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(17,17,17,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    border-radius: 16px;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.06);
+    filter: brightness(0.75);
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+/* Lightbox */
+#lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+#lightbox.active {
+    display: flex;
+}
+
+.lb-content {
+    position: relative;
+    max-width: 85vw;
+    max-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#lb-img {
+    max-width: 85vw;
+    max-height: 82vh;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    object-fit: contain;
+    animation: lbFadeIn 0.3s ease;
+}
+
+@keyframes lbFadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.lb-close {
+    position: absolute;
+    top: -45px;
+    right: 0;
+    background: rgba(87,77,62,0.8);
+    border: none;
+    color: #FFF9DD;
+    font-size: 18px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.lb-close:hover { background: #F4932A; }
+
+.lb-btn {
+    background: rgba(87,77,62,0.8);
+    border: none;
+    color: #EBE0C0;
+    font-size: 26px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.25s, transform 0.2s;
+    flex-shrink: 0;
+}
+
+.lb-btn:hover {
+    background: #F4932A;
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .lb-btn { width: 44px; height: 44px; font-size: 20px; }
+    #lb-img { max-width: 90vw; max-height: 75vh; }
+}
+
+@media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<div id="galleryData" data-photos='{{ photos | map(attribute="image_url") | list | tojson | safe }}' style="display:none;"></div>
+
+<script>
+    // Get photos array from data attribute (prevents IDE syntax errors)
+    const photos = JSON.parse(document.getElementById('galleryData').dataset.photos);
+
+    let current = 0;
+
+    function openLightbox(idx) {
+        current = idx;
+        document.getElementById('lb-img').src = photos[current];
+        document.getElementById('lightbox').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function closeLightboxOutside(e) {
+        if (e.target.id === 'lightbox') closeLightbox();
+    }
+
+    function changePhoto(dir) {
+        current = (current + dir + photos.length) % photos.length;
+        const img = document.getElementById('lb-img');
+        img.style.animation = 'none';
+        img.offsetHeight; // reflow
+        img.style.animation = '';
+        img.src = photos[current];
+    }
+
+    // Attach click listeners to gallery items
+    document.querySelectorAll('.gallery-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const idx = parseInt(this.getAttribute('data-index'));
+            openLightbox(idx);
+        });
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (!document.getElementById('lightbox').classList.contains('active')) return;
+        if (e.key === 'ArrowLeft') changePhoto(-1);
+        if (e.key === 'ArrowRight') changePhoto(1);
+        if (e.key === 'Escape') closeLightbox();
+    });
+</script>
+{% endblock %}
