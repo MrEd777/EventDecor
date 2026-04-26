@@ -263,6 +263,67 @@
             document.getElementById('multiStepForm').reset();
             showStep(1);
         }
+
+        // Scroll Reveal Observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('reveal-active');
+                    }
+                });
+            }, observerOptions);
+
+            // Precise target list
+            const selectors = [
+                'section', 'footer', '.container > div', 'h1', 'h2', 'h3', 'p', 
+                '.btn', '.category-card', '.event-grid-card', '.stat-card', 
+                '.about-content', '.pricing-card', '.contact-card', 
+                '.pricing-item', '.process-image-container', 
+                '.pricing-header', '.reviews-grid > div', '.hero-floating-box',
+                '.contact-form'
+            ];
+            
+            const revealElements = document.querySelectorAll(selectors.join(', '));
+            
+            revealElements.forEach(el => {
+                // Skip logic: 
+                // 1. Photos inside gallery (individual event detail page)
+                // 2. Sections/containers that should stay static if children animate instead
+                if (el.closest('.gallery-grid') || el.classList.contains('no-reveal')) return;
+                
+                el.classList.add('reveal');
+                revealObserver.observe(el);
+            });
+
+            // Typography: Fix hanging prepositions
+            function fixHangingPrepositions() {
+                const words = ['в', 'без', 'до', 'из', 'к', 'на', 'по', 'о', 'от', 'при', 'с', 'у', 'за', 'над', 'под', 'про', 'для', 'а', 'и', 'не', 'ни', 'я', 'ли', 'бы', 'же'];
+                const pattern = '(^|[\\s\\(\\)\\[\\]"“«])(' + words.join('|') + ')\\s+';
+                const regex = new RegExp(pattern, 'gi');
+                
+                const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+                let node;
+                while(node = walker.nextNode()) {
+                    const parent = node.parentElement;
+                    if (!parent || ['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT', 'NOSCRIPT'].includes(parent.tagName)) continue;
+                    
+                    const val = node.nodeValue;
+                    const newVal = val.replace(regex, '$1$2\u00A0');
+                    if (val !== newVal) {
+                        node.nodeValue = newVal;
+                    }
+                }
+            }
+            // Run on load to ensure all dynamic content is ready
+            window.addEventListener('load', fixHangingPrepositions);
+            fixHangingPrepositions();
+        });
     </script>
 </body>
 </html>

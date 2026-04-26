@@ -13,9 +13,9 @@
 
     <div class="container hero-container">
         <div class="hero-text-content">
-            <h1 class="hero-title">ПОГРУЗИТЕСЬ В МИР<br>ИСКЛЮЧИТЕЛЬНОЙ ЭСТЕТИКИ</h1>
-            <p class="hero-subtitle">Отражаем вашу личность в деталях и создаем атмосферу через авторский декор. Наполняем пространство красотой и превращаем ваше событие в живую историю</p>
-            <div class="hero-buttons">
+            <h1 class="hero-title reveal-delay-1">ПОГРУЗИТЕСЬ В МИР<br>ИСКЛЮЧИТЕЛЬНОЙ ЭСТЕТИКИ</h1>
+            <p class="hero-subtitle reveal-delay-2">Отражаем вашу личность в деталях и создаем атмосферу через авторский декор. Наполняем пространство красотой и превращаем ваше событие в живую историю</p>
+            <div class="hero-buttons reveal-delay-3">
                 <a href="javascript:void(0)" class="btn btn-secondary hero-btn-main" onclick="openOrderModal()">Обсудить проект</a>
                 <a href="#categories" class="hero-btn-link" onclick="document.querySelector('#categories').scrollIntoView({behavior: 'smooth'}); return false;">Перейти к портфолио</a>
             </div>
@@ -58,14 +58,14 @@
 
     <div class="category-grid">
         {% set corp_bg = url_for('static', filename='uploads/portfolio/corp_category.jpg') if has_corp else 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop' %}
-        <a href="{{ url_for('events_list', category='corporate') }}" class="category-card" style="background-image: url('{{ corp_bg }}');">
+        <a href="{{ url_for('events_list', category='corporate') }}" class="category-card reveal-delay-1" style="background-image: url('{{ corp_bg }}');">
             <h3>КОРПОРАТИВНЫЕ<br><span class="category-card-subtitle">Мероприятия</span></h3>
             <div class="card-arrow">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </div>
         </a>
         {% set private_bg = url_for('static', filename='uploads/portfolio/private_category.jpg') if has_private else 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop' %}
-        <a href="{{ url_for('events_list', category='private') }}" class="category-card" style="background-image: url('{{ private_bg }}');">
+        <a href="{{ url_for('events_list', category='private') }}" class="category-card reveal-delay-2" style="background-image: url('{{ private_bg }}');">
             <h3>ЧАСТНЫЕ<br><span class="category-card-subtitle">Мероприятия</span></h3>
             <div class="card-arrow">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
