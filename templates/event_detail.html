@@ -3,7 +3,7 @@
 {% block title %}{{ item.title }} - Декор | Event Decor{% endblock %}
 
 {% block content %}
-<section class="events-category-section container gallery-page-container">
+<section class="events-category-section container gallery-page-container no-reveal">
 
     <!-- Назад -->
     <div class="back-link-container">
@@ -44,9 +44,6 @@
     </div>
     <button class="lb-btn lb-next" onclick="changePhoto(1)">&#8594;</button>
 </div>
-
-</div>
-{% endblock %}
 
 <div id="galleryData" data-photos='{{ photos | map(attribute="image_url") | list | tojson | safe }}' style="display:none;"></div>
 

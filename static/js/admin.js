@@ -15,16 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     });
 
-    // Confirm delete actions
-    const deleteForms = document.querySelectorAll('form[onsubmit*="confirm"]');
-    deleteForms.forEach(function(form) {
-        form.addEventListener('submit', function(e) {
-            if (!confirm('Вы уверены, что хотите удалить эту запись?')) {
-                e.preventDefault();
-            }
-        });
-    });
-
     // Form validation for portfolio form
     const portfolioForm = document.querySelector('.admin-form');
     if (portfolioForm) {

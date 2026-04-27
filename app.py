@@ -2,8 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from datetime import datetime
-import os
 from functools import wraps
+import os
+import uuid
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)

@@ -1075,6 +1075,7 @@ a:hover {
 
 /* Gallery inside detail page */
 .gallery-grid {
+    display: grid;
     grid-template-columns: repeat(auto-fill, 300px);
     justify-content: center;
     gap: 20px;
@@ -1321,6 +1322,7 @@ a:hover {
     }
     
     .gallery-grid {
+        display: grid;
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 10px;
     }
