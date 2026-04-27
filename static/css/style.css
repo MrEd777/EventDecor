@@ -1450,11 +1450,6 @@ a:hover {
     background: rgba(244, 147, 42, 0.1);
 }
 
-.option-icon {
-    font-size: 32px;
-    display: block;
-    margin-bottom: 10px;
-}
 
 .option-content h4 {
     color: #FFF9DD;
