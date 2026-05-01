@@ -1112,7 +1112,7 @@ a:hover {
 }
 .category-header span {
     font-size: 24px;
-    color: #fff;
+    color: #FFF9DD;
     letter-spacing: 1px;
 }
 .events-grid {
@@ -1670,9 +1670,9 @@ a:hover {
 
 .category-card-subtitle {
     font-size: 14px;
-    color: var(--gold);
-    letter-spacing: 2px;
-    opacity: 0.8;
+    color: #FFF9DD;
+    letter-spacing: 3px;
+    opacity: 0.9;
 }
 
 .category-card-info .slider-arrow {

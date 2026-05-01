@@ -418,9 +418,7 @@ def admin_settings():
         os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
         keys_and_names = {
             'process_image': 'process.jpg',
-            'hero_image': 'hero.jpg',
-            'private_image': 'private_category.jpg',
-            'corp_image': 'corp_category.jpg'
+            'hero_image': 'hero.jpg'
         }
         for key, set_filename in keys_and_names.items():
             file = request.files.get(key)
@@ -431,7 +429,7 @@ def admin_settings():
         return redirect(url_for('admin_settings'))
     
     images_status = {}
-    for key, filename in [('process', 'process.jpg'), ('hero', 'hero.jpg'), ('private', 'private_category.jpg'), ('corp', 'corp_category.jpg')]:
+    for key, filename in [('process', 'process.jpg'), ('hero', 'hero.jpg')]:
         path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         images_status[f'has_{key}'] = os.path.exists(path)
         

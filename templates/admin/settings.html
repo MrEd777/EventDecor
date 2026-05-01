@@ -23,29 +23,6 @@
             <input type="file" name="hero_image" accept="image/*">
         </div>
 
-        <!-- Private Events Image -->
-        <div class="form-group settings-group">
-            <h3>Плитка "Частные мероприятия"</h3>
-            {% if has_private %}
-                <div class="preview-img-container">
-                    <img src="{{ url_for('static', filename='uploads/portfolio/private_category.jpg') }}" class="settings-preview-img">
-                </div>
-            {% endif %}
-            <label>Загрузить новую</label>
-            <input type="file" name="private_image" accept="image/*">
-        </div>
-
-        <!-- Corporate Events Image -->
-        <div class="form-group settings-group">
-            <h3>Плитка "Корпоративные мероприятия"</h3>
-            {% if has_corp %}
-                <div class="preview-img-container">
-                    <img src="{{ url_for('static', filename='uploads/portfolio/corp_category.jpg') }}" class="settings-preview-img">
-                </div>
-            {% endif %}
-            <label>Загрузить новую</label>
-            <input type="file" name="corp_image" accept="image/*">
-        </div>
 
         <!-- Process Image -->
         <div class="form-group settings-group">
