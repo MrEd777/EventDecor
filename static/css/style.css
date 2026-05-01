@@ -234,12 +234,18 @@ a:hover {
 .reveal-delay-2 { transition-delay: 0.4s; }
 .reveal-delay-3 { transition-delay: 0.6s; }
 
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
 /* Header Order Button */
 .btn-order-nav {
     background: #FFF9DD;
     color: #111;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 22px;
     border-radius: 25px;
     font-family: var(--font-body);
     font-size: 13px;
@@ -247,7 +253,6 @@ a:hover {
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.3s;
-    margin-left: 20px;
 }
 
 .btn-order-nav:hover {
@@ -475,7 +480,7 @@ a:hover {
 }
 
 .no-photos-msg {
-    text-align: center;
+    text-align: left;
     width: 100%;
     color: #aaa;
     font-family: var(--font-body);
@@ -588,6 +593,7 @@ a:hover {
     padding: 20px 30px;
     border-radius: 15px;
     max-width: 320px;
+    border: 1px solid var(--gold);
     display: flex;
     gap: 15px;
     align-items: center;
@@ -632,7 +638,7 @@ a:hover {
 }
 .about-stats-flex {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: 50px;
     flex-wrap: wrap;
 }
@@ -808,7 +814,7 @@ a:hover {
     text-align: left;
     font-size: 42px;
     margin-bottom: 60px;
-    color: var(--gold);
+    color: var(--text-muted);
 }
 .pricing-flex {
     display: flex;
@@ -824,6 +830,7 @@ a:hover {
     margin-bottom: 30px;
     border-bottom: 1px solid var(--gold);
     padding-bottom: 10px;
+    text-align: center;
 }
 .pricing-col ul {
     list-style: none;
@@ -850,7 +857,7 @@ a:hover {
 }
 .process-section h2 {
     font-size: 42px;
-    color: var(--gold);
+    color: var(--text-muted);
     margin-bottom: 80px;
 }
 
@@ -957,19 +964,27 @@ a:hover {
 /* Footer Section */
 .footer {
     background-color: var(--bg-dark);
-    border-top: none;
-    padding: 100px 50px;
+    padding: 100px 40px;
     display: flex;
-    justify-content: space-between;
-    gap: 50px;
+    justify-content: center;
+    text-align: center;
 }
-.footer-left {
-    flex: 1;
-    max-width: 300px;
+.footer-container {
+    max-width: 800px;
+    width: 100%;
 }
-.footer-right {
-    flex: 1;
-    max-width: 600px;
+.footer-form-section {
+    margin-bottom: 60px;
+}
+.footer-contacts-section {
+    padding-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.footer-contacts-flex {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
 }
 .footer-title {
     font-family: var(--font-heading);
@@ -1226,6 +1241,9 @@ a:hover {
     }
     
     .hero-section {
+        flex-direction: column !important;
+        padding-top: 120px;
+        height: auto !important;
         background-position: center !important;
     }
     
@@ -1267,11 +1285,14 @@ a:hover {
     
     .hero-floating-box {
         position: relative;
-        bottom: 0;
-        right: 0;
-        margin-top: 30px;
+        bottom: auto;
+        right: auto;
+        margin: 40px 0 0 0;
+        width: 100%;
         max-width: 100%;
-        display: none; /* Hide on mobile to save space */
+        border: 1px solid var(--gold);
+        display: flex !important;
+        order: 2;
     }
     
     .hero-buttons {
@@ -1294,6 +1315,14 @@ a:hover {
     .category-grid, .contact-grid {
         grid-template-columns: 1fr;
         gap: 20px;
+    }
+
+    .about-quote-box {
+        display: flex;
+        width: 100%;
+        max-width: none;
+        border: 1px solid var(--gold) !important;
+        margin-top: 20px;
     }
 
     .events-grid {
@@ -1390,21 +1419,7 @@ a:hover {
     }
     
     .footer {
-        flex-direction: column;
-        padding: 40px 20px !important;
-        gap: 40px !important;
-    }
-    
-    .footer-left {
-        order: 2;
-        text-align: center;
-        max-width: 100% !important;
-    }
-    
-    .footer-right {
-        order: 1;
-        text-align: center;
-        max-width: 100% !important;
+        padding: 60px 20px !important;
     }
     
     .contact-page {
@@ -1528,14 +1543,14 @@ a:hover {
     background: #252525;
     padding: 25px;
     border-radius: 16px;
-    text-align: center;
+    text-align: left;
     border: 2px solid transparent;
     transition: all 0.3s;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .option-card:hover .option-content {

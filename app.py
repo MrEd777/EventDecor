@@ -411,29 +411,6 @@ def admin_portfolio_photo_delete(photo_id):
     flash('Фотография удалена из галереи', 'success')
     return redirect(url_for('admin_portfolio_edit', id=item_id))
 
-@app.route('/admin/settings', methods=['GET', 'POST'])
-@login_required
-def admin_settings():
-    if request.method == 'POST':
-        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-        keys_and_names = {
-            'process_image': 'process.jpg',
-            'hero_image': 'hero.jpg'
-        }
-        for key, set_filename in keys_and_names.items():
-            file = request.files.get(key)
-            if file and file.filename:
-                file_path = os.path.join(app.config['UPLOAD_FOLDER'], set_filename)
-                file.save(file_path)
-        flash('Изображения успешно загружены', 'success')
-        return redirect(url_for('admin_settings'))
-    
-    images_status = {}
-    for key, filename in [('process', 'process.jpg'), ('hero', 'hero.jpg')]:
-        path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        images_status[f'has_{key}'] = os.path.exists(path)
-        
-    return render_template('admin/settings.html', **images_status)
 
 # Initialize database and create default admin
 def init_db():

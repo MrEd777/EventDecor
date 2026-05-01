@@ -3,8 +3,7 @@
 {% block title %}Агентство событийного декора | Event Decor{% endblock %}
 
 {% block content %}
-{% set hero_bg = url_for('static', filename='uploads/portfolio/hero.jpg') if has_hero else 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format&fit=crop' %}
-<section class="hero-section" style="--hero-bg: url('{{ hero_bg }}');">
+<section class="hero-section" style="--hero-bg: url('{{ url_for('static', filename='img/main.png') }}');">
     
     <div class="hero-floating-box">
         <div class="hero-floating-box-icon">✱</div>
@@ -14,7 +13,7 @@
     <div class="container hero-container">
         <div class="hero-text-content">
             <img src="{{ url_for('static', filename='img/main_page.png') }}" alt="Event Decor Logo" class="hero-center-logo">
-            <h1 class="hero-title reveal-delay-1">ПОГРУЗИТЕСЬ В МИР<br>ИСКЛЮЧИТЕЛЬНОЙ ЭСТЕТИКИ</h1>
+            <h1 class="hero-title reveal-delay-1">Забудьте о стандартах:<br>создаем декор с историей</h1>
             <p class="hero-subtitle reveal-delay-2">Отражаем вашу личность в деталях и создаем атмосферу через авторский декор. Наполняем пространство красотой и превращаем ваше событие в живую историю</p>
             <div class="hero-buttons reveal-delay-3">
                 <a href="javascript:void(0)" class="btn btn-secondary hero-btn-main" onclick="openOrderModal()">Обсудить проект</a>
@@ -147,14 +146,14 @@
 <section class="process-section container" id="process-section">
     <h2>Процесс работы</h2>
     <div class="process-image-container">
-        <img src="{{ url_for('static', filename='uploads/portfolio/process.jpg') }}" onerror="this.src='https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop'" alt="Процесс работы" class="process-image">
+        <img src="{{ url_for('static', filename='img/process.png') }}" alt="Процесс работы" class="process-image">
     </div>
 </section>
 
 <section class="reviews-section container" id="reviews-section">
     <!-- Left column: Title and Controls -->
     <div class="reviews-controls">
-        <h2 class="reviews-title">Они говорят...</h2>
+        <h2 class="reviews-title">Отзывы</h2>
         <div class="reviews-buttons-container">
             <button id="prevReview" class="review-btn">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
