@@ -84,6 +84,14 @@ a:hover {
     align-items: center;
 }
 
+.mobile-phone-top {
+    display: none;
+}
+
+.btn-order-mobile {
+    display: none;
+}
+
 .contact-info {
     display: flex;
     flex-direction: column;
@@ -153,6 +161,21 @@ a:hover {
     .navbar {
         padding: 15px 20px;
     }
+    .mobile-phone-top {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--text-light);
+        font-weight: 600;
+        font-size: 13px;
+        margin-left: auto;
+        margin-right: 12px;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+    .mobile-phone-top span {
+        display: inline;
+    }
     .mobile-menu-btn {
         display: block;
     }
@@ -163,11 +186,25 @@ a:hover {
         top: 70px;
         left: 0;
         width: 100%;
-        background: rgba(17, 17, 17, 0.95);
+        background: rgba(17, 17, 17, 0.98);
         backdrop-filter: blur(10px);
-        padding: 20px 0;
+        padding: 30px 20px;
         gap: 20px !important;
         border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-order-mobile {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+        padding: 16px;
+        background: #FFF9DD;
+        color: #111;
+        border: none;
+        border-radius: 12px;
+        font-family: var(--font-body);
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
     }
     .nav-links.active {
         display: flex;
@@ -1427,6 +1464,7 @@ a:hover {
     background: #333;
     border-radius: 2px;
     margin-bottom: 40px;
+    margin-top: 10px;
     overflow: hidden;
 }
 
@@ -1453,9 +1491,11 @@ a:hover {
 
 .form-step h3 {
     color: #FFF9DD;
-    font-size: 28px;
+    font-family: var(--font-heading);
+    font-size: 32px;
     margin-bottom: 30px;
     text-align: center;
+    font-weight: normal;
 }
 
 /* Modal Form Option Cards (Restored) */
@@ -1489,19 +1529,30 @@ a:hover {
 
 .option-card input:checked + .option-content {
     border-color: var(--gold);
-    background: rgba(244, 147, 42, 0.1);
+    background: var(--gold);
+}
+
+.option-card input:checked + .option-content h4,
+.option-card input:checked + .option-content p {
+    color: #111 !important;
 }
 
 .option-content h4 {
     color: #FFF9DD;
-    font-size: 18px;
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     margin-bottom: 0px;
 }
 
 .option-content p {
     color: #aaa;
+    font-family: var(--font-body);
     font-size: 13px;
     line-height: 1.4;
+    margin-top: 8px;
 }
 
 /* Slider Arrows */
@@ -1574,7 +1625,7 @@ a:hover {
 
 .category-card-new {
     position: relative;
-    height: 500px;
+    aspect-ratio: 4/5;
     border-radius: 24px;
     overflow: hidden;
     background: #111;
@@ -1584,7 +1635,7 @@ a:hover {
 }
 
 .category-card-new:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
 }
 
 .mini-slider-main {
@@ -1593,29 +1644,47 @@ a:hover {
     z-index: 1;
 }
 
-.category-card-content {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    background: linear-gradient(to top, rgba(17,17,17,0.95) 0%, rgba(17,17,17,0.1) 60%);
+.category-card-info {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 50px;
-    text-align: center;
-    transition: background 0.4s ease;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 10px 5px;
 }
 
+.category-info-text {
+    flex: 1;
+    text-align: center;
+}
 
-.category-card-content h3 {
+.category-info-text h3 {
     color: var(--text-light);
-    font-size: 32px;
-    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-family: var(--font-heading);
     font-weight: normal;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     line-height: 1.2;
+    margin: 0;
+}
+
+.category-card-subtitle {
+    font-size: 14px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    opacity: 0.8;
+}
+
+.category-card-info .slider-arrow {
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    transform: none;
+    opacity: 1;
+    width: 40px;
+    height: 40px;
+    background: rgba(30, 30, 30, 0.6);
 }
 
 .btn-see-more-gold {
@@ -1858,7 +1927,15 @@ a:hover {
 
 @media (max-width: 600px) {
     .modal-container {
-        padding: 30px 20px;
+        padding: 55px 20px 30px 20px;
+    }
+    .modal-close {
+        top: 15px;
+        right: 15px;
+        font-size: 20px;
+    }
+    .modal-progress {
+        margin-bottom: 25px;
     }
     .form-step h3 {
         font-size: 22px;

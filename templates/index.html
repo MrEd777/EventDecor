@@ -69,16 +69,20 @@
                         <img src="{{ corp_bg }}" class="slider-img active">
                     {% endif %}
                 </a>
-                <div class="slider-arrow prev" onclick="event.stopPropagation(); moveSlider(this, -1)">
+            </div>
+            
+            <div class="category-card-info">
+                <div class="slider-arrow prev" onclick="moveSlider(this, -1)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 </div>
-                <div class="slider-arrow next" onclick="event.stopPropagation(); moveSlider(this, 1)">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </div>
-                <a href="{{ url_for('events_list', category='corporate') }}" class="category-card-content">
+                <a href="{{ url_for('events_list', category='corporate') }}" class="category-info-text">
                     <h3>КОРПОРАТИВНЫЕ<br><span class="category-card-subtitle">Мероприятия</span></h3>
                 </a>
+                <div class="slider-arrow next" onclick="moveSlider(this, 1)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
             </div>
+            
             <a href="{{ url_for('events_list', category='corporate') }}" class="btn-see-more-gold">Посмотреть еще</a>
         </div>
 
@@ -94,16 +98,20 @@
                         <img src="{{ private_bg }}" class="slider-img active">
                     {% endif %}
                 </a>
-                <div class="slider-arrow prev" onclick="event.stopPropagation(); moveSlider(this, -1)">
+            </div>
+
+            <div class="category-card-info">
+                <div class="slider-arrow prev" onclick="moveSlider(this, -1)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 </div>
-                <div class="slider-arrow next" onclick="event.stopPropagation(); moveSlider(this, 1)">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </div>
-                <a href="{{ url_for('events_list', category='private') }}" class="category-card-content">
+                <a href="{{ url_for('events_list', category='private') }}" class="category-info-text">
                     <h3>ЧАСТНЫЕ<br><span class="category-card-subtitle">Мероприятия</span></h3>
                 </a>
+                <div class="slider-arrow next" onclick="moveSlider(this, 1)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
             </div>
+            
             <a href="{{ url_for('events_list', category='private') }}" class="btn-see-more-gold">Посмотреть еще</a>
         </div>
     </div>
