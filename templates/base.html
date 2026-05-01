@@ -18,7 +18,7 @@
         <div class="mobile-menu-btn" onclick="toggleMobileMenu()">&#9776;</div>
         
         <div class="nav-links">
-            <a href="/#categories" onclick="closeMobileMenu(); if(window.location.pathname=='/') { document.querySelector('#categories').scrollIntoView({behavior: 'smooth'}); return false; }">Портфолио</a>
+            <a href="/#portfolio-start" onclick="closeMobileMenu(); if(window.location.pathname=='/') { document.querySelector('#portfolio-start').scrollIntoView({behavior: 'smooth'}); return false; }">Портфолио</a>
             <a href="/#pricing" onclick="closeMobileMenu(); if(window.location.pathname=='/') { document.querySelector('#pricing').scrollIntoView({behavior: 'smooth'}); return false; }">Прайс</a>
             <a href="/#process-section" onclick="closeMobileMenu(); if(window.location.pathname=='/') { document.querySelector('#process-section').scrollIntoView({behavior: 'smooth'}); return false; }">Процесс работы</a>
             <a href="/#reviews-section" onclick="closeMobileMenu(); if(window.location.pathname=='/') { document.querySelector('#reviews-section').scrollIntoView({behavior: 'smooth'}); return false; }">Отзывы</a>
@@ -213,6 +213,29 @@
             }
             return true;
         }
+
+        // Mini Slider Logic
+        function initMiniSliders() {
+            // Auto-play removed as per user request. 
+            // Arrows now handle all navigation.
+        }
+
+        function moveSlider(btn, direction) {
+            const container = btn.closest('.category-card-new');
+            const slider = container.querySelector('.mini-slider-main');
+            const imgs = slider.querySelectorAll('.slider-img');
+            if (imgs.length <= 1) return;
+            
+            const allImgs = Array.from(imgs);
+            const currentActive = slider.querySelector('.slider-img.active');
+            let currentIdx = currentActive ? allImgs.indexOf(currentActive) : 0;
+            
+            if (currentActive) currentActive.classList.remove('active');
+            currentIdx = (currentIdx + direction + allImgs.length) % allImgs.length;
+            allImgs[currentIdx].classList.add('active');
+        }
+
+        window.addEventListener('DOMContentLoaded', initMiniSliders);
 
         // Multi-step form logic
         let currentStep = 1;

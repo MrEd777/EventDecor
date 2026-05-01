@@ -17,7 +17,7 @@
             <p class="hero-subtitle reveal-delay-2">Отражаем вашу личность в деталях и создаем атмосферу через авторский декор. Наполняем пространство красотой и превращаем ваше событие в живую историю</p>
             <div class="hero-buttons reveal-delay-3">
                 <a href="javascript:void(0)" class="btn btn-secondary hero-btn-main" onclick="openOrderModal()">Обсудить проект</a>
-                <a href="#categories" class="hero-btn-link" onclick="document.querySelector('#categories').scrollIntoView({behavior: 'smooth'}); return false;">Перейти к портфолио</a>
+                <a href="#portfolio-start" class="hero-btn-link" onclick="document.querySelector('#portfolio-start').scrollIntoView({behavior: 'smooth'}); return false;">Перейти к портфолио</a>
             </div>
         </div>
     </div>
@@ -50,27 +50,62 @@
         </div>
 
         <!-- Left-aligned Quote Box -->
-        <div class="about-quote-box">
+        <div class="about-quote-box" id="portfolio-start">
             <span class="about-quote-icon">✱</span>
             <span class="about-quote-text">Меняем пространство,<br>оставляя смыслы</span>
         </div>
     </div>
 
     <div class="category-grid">
-        {% set corp_bg = url_for('static', filename='uploads/portfolio/corp_category.jpg') if has_corp else 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop' %}
-        <a href="{{ url_for('events_list', category='corporate') }}" class="category-card reveal-delay-1" style="background-image: url('{{ corp_bg }}');">
-            <h3>КОРПОРАТИВНЫЕ<br><span class="category-card-subtitle">Мероприятия</span></h3>
-            <div class="card-arrow">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        <div class="category-choice-main">
+            <div class="category-card-new">
+                <a href="{{ url_for('events_list', category='corporate') }}" class="mini-slider-main">
+                    {% if corporate_photos %}
+                        {% for url in corporate_photos %}
+                        <img src="{{ url }}" class="slider-img {% if loop.first %}active{% endif %}">
+                        {% endfor %}
+                    {% else %}
+                        {% set corp_bg = url_for('static', filename='uploads/portfolio/corp_category.jpg') if has_corp else 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop' %}
+                        <img src="{{ corp_bg }}" class="slider-img active">
+                    {% endif %}
+                </a>
+                <div class="slider-arrow prev" onclick="event.stopPropagation(); moveSlider(this, -1)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </div>
+                <div class="slider-arrow next" onclick="event.stopPropagation(); moveSlider(this, 1)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+                <a href="{{ url_for('events_list', category='corporate') }}" class="category-card-content">
+                    <h3>КОРПОРАТИВНЫЕ<br><span class="category-card-subtitle">Мероприятия</span></h3>
+                </a>
             </div>
-        </a>
-        {% set private_bg = url_for('static', filename='uploads/portfolio/private_category.jpg') if has_private else 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop' %}
-        <a href="{{ url_for('events_list', category='private') }}" class="category-card reveal-delay-2" style="background-image: url('{{ private_bg }}');">
-            <h3>ЧАСТНЫЕ<br><span class="category-card-subtitle">Мероприятия</span></h3>
-            <div class="card-arrow">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            <a href="{{ url_for('events_list', category='corporate') }}" class="btn-see-more-gold">Посмотреть еще</a>
+        </div>
+
+        <div class="category-choice-main">
+            <div class="category-card-new">
+                <a href="{{ url_for('events_list', category='private') }}" class="mini-slider-main">
+                    {% if private_photos %}
+                        {% for url in private_photos %}
+                        <img src="{{ url }}" class="slider-img {% if loop.first %}active{% endif %}">
+                        {% endfor %}
+                    {% else %}
+                        {% set private_bg = url_for('static', filename='uploads/portfolio/private_category.jpg') if has_private else 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop' %}
+                        <img src="{{ private_bg }}" class="slider-img active">
+                    {% endif %}
+                </a>
+                <div class="slider-arrow prev" onclick="event.stopPropagation(); moveSlider(this, -1)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </div>
+                <div class="slider-arrow next" onclick="event.stopPropagation(); moveSlider(this, 1)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+                <a href="{{ url_for('events_list', category='private') }}" class="category-card-content">
+                    <h3>ЧАСТНЫЕ<br><span class="category-card-subtitle">Мероприятия</span></h3>
+                </a>
             </div>
-        </a>
+            <a href="{{ url_for('events_list', category='private') }}" class="btn-see-more-gold">Посмотреть еще</a>
+        </div>
     </div>
 </section>
 

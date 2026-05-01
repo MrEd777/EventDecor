@@ -82,9 +82,35 @@ def home():
     imgs = {}
     for k, v in [('hero', 'hero.jpg'), ('private', 'private_category.jpg'), ('corp', 'corp_category.jpg')]:
         imgs[f'has_{k}'] = os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], v))
+    
     private_pricing = PricingItem.query.filter_by(category='private').all()
     corp_pricing = PricingItem.query.filter_by(category='corporate').all()
-    return render_template('index.html', private_pricing=private_pricing, corp_pricing=corp_pricing, **imgs)
+    
+    # Fetch random photos for the portfolio category sliders
+    def get_category_photos(cat):
+        try:
+            items = PortfolioItem.query.filter_by(category=cat).all()
+            urls = []
+            for item in items:
+                if item.image_url:
+                    urls.append(item.image_url)
+                for photo in item.photos:
+                    urls.append(photo.image_url)
+            import random
+            random.shuffle(urls)
+            return urls[:12]  # Limit to 12 photos for home page sliders
+        except:
+            return []
+    
+    private_photos = get_category_photos('private')
+    corporate_photos = get_category_photos('corporate')
+    
+    return render_template('index.html', 
+                           private_pricing=private_pricing, 
+                           corp_pricing=corp_pricing, 
+                           private_photos=private_photos,
+                           corporate_photos=corporate_photos,
+                           **imgs)
 
 @app.route('/events/<category>')
 def events_list(category):
