@@ -297,6 +297,7 @@ a:hover {
     position: relative;
     min-height: 100vh;
     display: flex;
+    justify-content: center;
     align-items: center;
     background: linear-gradient(to right, rgba(11,11,11,1) 0%, rgba(11,11,11,0.92) 55%, rgba(11,11,11,0.4) 100%), var(--hero-bg, none) no-repeat right center/cover;
     overflow: hidden;
@@ -308,38 +309,53 @@ a:hover {
     margin-top: 50px;
 }
 .hero-container {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: left;
     width: 100%;
-}
-.hero-text-content {
-    max-width: 700px;
+    max-width: 1200px;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
     z-index: 2;
 }
+
+.hero-text-content {
+    width: 100%;
+    text-align: left;
+}
+
+.hero-center-logo {
+    display: block;
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto 50px auto !important;
+    filter: drop-shadow(0 10px 25px rgba(0,0,0,0.5));
+}
+
 .hero-title {
     font-family: var(--font-heading);
     font-size: 52px;
     color: #EBE0C0;
-    margin-bottom: 20px;
+    margin: 0 0 20px 0 !important;
     line-height: 1.2;
     font-weight: normal;
     text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    text-align: left !important;
 }
 .hero-subtitle {
     font-size: 16px;
     color: #FFF9DD;
     line-height: 1.6;
-    margin-bottom: 40px;
-    max-width: 550px;
+    margin: 0 0 40px 0 !important;
+    max-width: 650px;
+    text-align: left !important;
 }
 .hero-buttons {
     display: flex;
     gap: 30px;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-start !important;
 }
 .hero-btn-main {
     border-radius: 30px !important;
@@ -371,7 +387,7 @@ a:hover {
 }
 
 .process-image-container {
-    text-align: center;
+    text-align: left;
     margin-top: 40px;
 }
 
@@ -436,7 +452,7 @@ a:hover {
 }
 
 .gallery-header {
-    text-align: center;
+    text-align: left;
     margin-bottom: 40px;
 }
 
@@ -789,19 +805,19 @@ a:hover {
     padding-bottom: 80px;
 }
 .pricing-section h2 {
-    text-align: center;
+    text-align: left;
     font-size: 42px;
     margin-bottom: 60px;
     color: var(--gold);
 }
 .pricing-flex {
     display: flex;
-    gap: 80px;
-    justify-content: center;
+    gap: 40px;
+    justify-content: space-between;
 }
 .pricing-col {
     flex: 1;
-    max-width: 400px;
+    max-width: 550px;
 }
 .pricing-col h3 {
     font-size: 28px;
@@ -830,7 +846,7 @@ a:hover {
 .process-section {
     padding-top: 80px;
     padding-bottom: 80px;
-    text-align: center;
+    text-align: left;
 }
 .process-section h2 {
     font-size: 42px;
@@ -1494,7 +1510,7 @@ a:hover {
     font-family: var(--font-heading);
     font-size: 32px;
     margin-bottom: 30px;
-    text-align: center;
+    text-align: left;
     font-weight: normal;
 }
 
@@ -1648,7 +1664,7 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
+    gap: 10px;
     padding: 10px 5px;
 }
 
