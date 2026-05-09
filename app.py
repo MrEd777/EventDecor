@@ -7,24 +7,32 @@ import os
 import uuid
 from werkzeug.utils import secure_filename
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your-secret-key-change-this-in-production'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///event_decor.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+application = Flask(__name__)
+application.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-change-this-in-production')
+
+# Настройки базы данных MySQL
+# Если на хостинге установлены переменные окружения, используем их, иначе — стандартную строку
+DB_USER = os.environ.get('DB_USER', 'твой_логин')
+DB_PASSWORD = os.environ.get('DB_PASSWORD', 'твой_пароль')
+DB_HOST = os.environ.get('DB_HOST', 'localhost')
+DB_NAME = os.environ.get('DB_NAME', 'event_decor')
+
+application.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}'
+application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Upload configuration
-app.config['UPLOAD_FOLDER'] = 'static/uploads/portfolio'
+application.config['UPLOAD_FOLDER'] = 'static/uploads/portfolio'
 
 # Email configuration
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'your-email@gmail.com'  # Change this
-app.config['MAIL_PASSWORD'] = 'your-app-password'      # Change this
-app.config['MAIL_DEFAULT_SENDER'] = 'your-email@gmail.com'
+application.config['MAIL_SERVER'] = 'smtp.gmail.com'
+application.config['MAIL_PORT'] = 587
+application.config['MAIL_USE_TLS'] = True
+application.config['MAIL_USERNAME'] = 'your-email@gmail.com'  # Change this
+application.config['MAIL_PASSWORD'] = 'your-app-password'      # Change this
+application.config['MAIL_DEFAULT_SENDER'] = 'your-email@gmail.com'
 
-db = SQLAlchemy(app)
-mail = Mail(app)
+db = SQLAlchemy(application)
+mail = Mail(application)
 
 # Database Models
 class Order(db.Model):
@@ -77,11 +85,11 @@ def login_required(f):
     return decorated_function
 
 # Routes - Main Website
-@app.route('/')
+@application.route('/')
 def home():
     imgs = {}
     for k, v in [('hero', 'hero.jpg'), ('private', 'private_category.jpg'), ('corp', 'corp_category.jpg')]:
-        imgs[f'has_{k}'] = os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], v))
+        imgs[f'has_{k}'] = os.path.exists(os.path.join(application.config['UPLOAD_FOLDER'], v))
     
     private_pricing = PricingItem.query.filter_by(category='private').all()
     corp_pricing = PricingItem.query.filter_by(category='corporate').all()
@@ -112,21 +120,21 @@ def home():
                            corporate_photos=corporate_photos,
                            **imgs)
 
-@app.route('/events/<category>')
+@application.route('/events/<category>')
 def events_list(category):
     if category not in ['private', 'corporate']:
         return redirect(url_for('home'))
     portfolio_items = PortfolioItem.query.filter_by(category=category).order_by(PortfolioItem.created_at.desc()).all()
     return render_template('events.html', category=category, portfolio_items=portfolio_items)
 
-@app.route('/event/<int:id>')
+@application.route('/event/<int:id>')
 def event_detail(id):
     item = PortfolioItem.query.get_or_404(id)
     photos = EventPhoto.query.filter_by(portfolio_item_id=id).all()
     return render_template('event_detail.html', item=item, photos=photos)
 
 
-@app.route('/submit_order', methods=['POST'])
+@application.route('/submit_order', methods=['POST'])
 def submit_order():
     try:
         order = Order(
@@ -154,7 +162,7 @@ def send_order_email(order):
     try:
         msg = Message(
             subject=f'Новая заявка от {order.name}',
-            recipients=[app.config['MAIL_USERNAME']],
+            recipients=[application.config['MAIL_USERNAME']],
             body=f'''
 Новая заявка на сайте Event Decor!
 
@@ -174,7 +182,7 @@ Email: {order.email or 'Не указан'}
         print(f'Error sending email: {e}')
 
 # Routes - Admin Panel
-@app.route('/admin/login', methods=['GET', 'POST'])
+@application.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
     if request.method == 'POST':
         username = request.form.get('username')
@@ -189,14 +197,14 @@ def admin_login():
             flash('Неверное имя пользователя или пароль', 'error')
     return render_template('admin/login.html')
 
-@app.route('/admin/logout')
+@application.route('/admin/logout')
 def admin_logout():
     session.pop('logged_in', None)
     session.pop('admin_username', None)
     flash('Вы вышли из системы', 'info')
     return redirect(url_for('admin_login'))
 
-@app.route('/admin')
+@application.route('/admin')
 @login_required
 def admin_dashboard():
     stats = {
@@ -208,7 +216,7 @@ def admin_dashboard():
     recent_orders = Order.query.order_by(Order.created_at.desc()).limit(5).all()
     return render_template('admin/dashboard.html', stats=stats, recent_orders=recent_orders)
 
-@app.route('/admin/orders')
+@application.route('/admin/orders')
 @login_required
 def admin_orders():
     status_filter = request.args.get('status')
@@ -218,13 +226,13 @@ def admin_orders():
         orders = Order.query.order_by(Order.created_at.desc()).all()
     return render_template('admin/orders.html', orders=orders)
 
-@app.route('/admin/order/<int:id>')
+@application.route('/admin/order/<int:id>')
 @login_required
 def admin_order_detail(id):
     order = Order.query.get_or_404(id)
     return render_template('admin/order_detail.html', order=order)
 
-@app.route('/admin/order/<int:id>/update_status', methods=['POST'])
+@application.route('/admin/order/<int:id>/update_status', methods=['POST'])
 @login_required
 def admin_update_order_status(id):
     order = Order.query.get_or_404(id)
@@ -233,7 +241,7 @@ def admin_update_order_status(id):
     flash('Статус заказа обновлен', 'success')
     return redirect(url_for('admin_order_detail', id=id))
 
-@app.route('/admin/order/<int:id>/delete', methods=['POST'])
+@application.route('/admin/order/<int:id>/delete', methods=['POST'])
 @login_required
 def admin_delete_order(id):
     order = Order.query.get_or_404(id)
@@ -242,13 +250,13 @@ def admin_delete_order(id):
     flash('Заказ удален', 'success')
     return redirect(url_for('admin_orders'))
 
-@app.route('/admin/portfolio')
+@application.route('/admin/portfolio')
 @login_required
 def admin_portfolio():
     portfolio_items = PortfolioItem.query.order_by(PortfolioItem.created_at.desc()).all()
     return render_template('admin/portfolio.html', portfolio_items=portfolio_items)
 
-@app.route('/admin/portfolio/add', methods=['GET', 'POST'])
+@application.route('/admin/portfolio/add', methods=['GET', 'POST'])
 @login_required
 def admin_portfolio_add():
     if request.method == 'POST':
@@ -257,8 +265,8 @@ def admin_portfolio_add():
         if file and file.filename:
             ext = os.path.splitext(file.filename)[1]
             filename = str(uuid.uuid4()) + ext
-            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            os.makedirs(application.config['UPLOAD_FOLDER'], exist_ok=True)
+            file_path = os.path.join(application.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
             image_url = '/' + file_path.replace('\\', '/')
 
@@ -275,7 +283,7 @@ def admin_portfolio_add():
             if photo_file and photo_file.filename:
                 ext = os.path.splitext(photo_file.filename)[1]
                 photo_filename = str(uuid.uuid4()) + ext
-                photo_file_path = os.path.join(app.config['UPLOAD_FOLDER'], photo_filename)
+                photo_file_path = os.path.join(application.config['UPLOAD_FOLDER'], photo_filename)
                 photo_file.save(photo_file_path)
                 p_url = '/' + photo_file_path.replace('\\', '/')
                 new_photo = EventPhoto(portfolio_item=item, image_url=p_url)
@@ -286,7 +294,7 @@ def admin_portfolio_add():
         return redirect(url_for('admin_portfolio'))
     return render_template('admin/portfolio_form.html', item=None, photos=[])
 
-@app.route('/admin/portfolio/edit/<int:id>', methods=['GET', 'POST'])
+@application.route('/admin/portfolio/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def admin_portfolio_edit(id):
     item = PortfolioItem.query.get_or_404(id)
@@ -299,8 +307,8 @@ def admin_portfolio_edit(id):
         if file and file.filename:
             ext = os.path.splitext(file.filename)[1]
             filename = str(uuid.uuid4()) + ext
-            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            os.makedirs(application.config['UPLOAD_FOLDER'], exist_ok=True)
+            file_path = os.path.join(application.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
             item.image_url = '/' + file_path.replace('\\', '/')
             
@@ -309,7 +317,7 @@ def admin_portfolio_edit(id):
             if photo_file and photo_file.filename:
                 ext = os.path.splitext(photo_file.filename)[1]
                 photo_filename = str(uuid.uuid4()) + ext
-                photo_file_path = os.path.join(app.config['UPLOAD_FOLDER'], photo_filename)
+                photo_file_path = os.path.join(application.config['UPLOAD_FOLDER'], photo_filename)
                 photo_file.save(photo_file_path)
                 p_url = '/' + photo_file_path.replace('\\', '/')
                 new_photo = EventPhoto(portfolio_item=item, image_url=p_url)
@@ -322,7 +330,7 @@ def admin_portfolio_edit(id):
     photos = EventPhoto.query.filter_by(portfolio_item_id=id).all()
     return render_template('admin/portfolio_form.html', item=item, photos=photos)
 
-@app.route('/admin/portfolio/delete/<int:id>', methods=['POST'])
+@application.route('/admin/portfolio/delete/<int:id>', methods=['POST'])
 @login_required
 def admin_portfolio_delete(id):
     item = PortfolioItem.query.get_or_404(id)
@@ -330,7 +338,7 @@ def admin_portfolio_delete(id):
     photos = EventPhoto.query.filter_by(portfolio_item_id=id).all()
     for photo in photos:
         # Delete file if exists
-        file_path = os.path.join(app.root_path, photo.image_url.lstrip('/'))
+        file_path = os.path.join(application.root_path, photo.image_url.lstrip('/'))
         if os.path.exists(file_path):
             try:
                 os.remove(file_path)
@@ -340,7 +348,7 @@ def admin_portfolio_delete(id):
     
     # Delete main image if it's not a generic one
     if item.image_url:
-        file_path = os.path.join(app.root_path, item.image_url.lstrip('/'))
+        file_path = os.path.join(application.root_path, item.image_url.lstrip('/'))
         if os.path.exists(file_path):
             try:
                 os.remove(file_path)
@@ -353,7 +361,7 @@ def admin_portfolio_delete(id):
     return redirect(url_for('admin_portfolio'))
 
 
-@app.route('/admin/pricing', methods=['GET', 'POST'])
+@application.route('/admin/pricing', methods=['GET', 'POST'])
 @login_required
 def admin_pricing():
     if request.method == 'POST':
@@ -371,7 +379,7 @@ def admin_pricing():
     corporate_items = PricingItem.query.filter_by(category='corporate').all()
     return render_template('admin/pricing.html', private_items=private_items, corporate_items=corporate_items)
 
-@app.route('/admin/pricing/delete/<int:id>', methods=['POST'])
+@application.route('/admin/pricing/delete/<int:id>', methods=['POST'])
 @login_required
 def admin_pricing_delete(id):
     item = PricingItem.query.get_or_404(id)
@@ -380,7 +388,7 @@ def admin_pricing_delete(id):
     flash('Услуга удалена', 'success')
     return redirect(url_for('admin_pricing'))
 
-@app.route('/admin/portfolio/<int:id>/photos', methods=['GET', 'POST'])
+@application.route('/admin/portfolio/<int:id>/photos', methods=['GET', 'POST'])
 @login_required
 def admin_portfolio_photos(id):
     item = PortfolioItem.query.get_or_404(id)
@@ -388,8 +396,8 @@ def admin_portfolio_photos(id):
         file = request.files.get('photo')
         if file and file.filename:
             filename = secure_filename(file.filename)
-            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            os.makedirs(application.config['UPLOAD_FOLDER'], exist_ok=True)
+            file_path = os.path.join(application.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
             photo_url = '/' + file_path.replace('\\', '/')
             new_photo = EventPhoto(portfolio_item_id=item.id, image_url=photo_url)
@@ -401,7 +409,7 @@ def admin_portfolio_photos(id):
     photos = EventPhoto.query.filter_by(portfolio_item_id=id).all()
     return render_template('admin/portfolio_photos.html', item=item, photos=photos)
 
-@app.route('/admin/portfolio/photo/delete/<int:photo_id>', methods=['POST'])
+@application.route('/admin/portfolio/photo/delete/<int:photo_id>', methods=['POST'])
 @login_required
 def admin_portfolio_photo_delete(photo_id):
     photo = EventPhoto.query.get_or_404(photo_id)
@@ -414,7 +422,7 @@ def admin_portfolio_photo_delete(photo_id):
 
 # Initialize database and create default admin
 def init_db():
-    with app.app_context():
+    with application.app_context():
         db.create_all()
         # Create default admin if not exists
         admin = Admin.query.filter_by(username='admin').first()
@@ -426,4 +434,4 @@ def init_db():
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True)
+    application.run(debug=True)
