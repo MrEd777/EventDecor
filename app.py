@@ -6,6 +6,7 @@ from functools import wraps
 import os
 import uuid
 from werkzeug.utils import secure_filename
+from PIL import Image
 
 application = Flask(__name__)
 application.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-change-this-in-production')
@@ -23,6 +24,26 @@ application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Upload configuration
 application.config['UPLOAD_FOLDER'] = 'static/uploads/portfolio'
 
+def create_thumbnail(source_path):
+    """Создает уменьшенную копию изображения с суффиксом _thumb."""
+    try:
+        # Определяем путь для миниатюры
+        base, ext = os.path.splitext(source_path)
+        thumb_path = f"{base}_thumb{ext}"
+        
+        with Image.open(source_path) as img:
+            # Если изображение в формате RGBA (с прозрачностью), 
+            # конвертируем в RGB перед сохранением в JPEG
+            if img.mode in ("RGBA", "P") and ext.lower() in ['.jpg', '.jpeg']:
+                img = img.convert("RGB")
+                
+            img.thumbnail((800, 800))
+            img.save(thumb_path, optimize=True, quality=85)
+        return True
+    except Exception as e:
+        print(f"Error creating thumbnail: {e}")
+        return False
+
 # Email configuration
 application.config['MAIL_SERVER'] = 'smtp.gmail.com'
 application.config['MAIL_PORT'] = 587
@@ -30,6 +51,23 @@ application.config['MAIL_USE_TLS'] = True
 application.config['MAIL_USERNAME'] = 'your-email@gmail.com'  # Change this
 application.config['MAIL_PASSWORD'] = 'your-app-password'      # Change this
 application.config['MAIL_DEFAULT_SENDER'] = 'your-email@gmail.com'
+
+@application.template_filter('thumbnail')
+def thumbnail_filter(s):
+    if not s or s.startswith('http'):
+        return s
+    
+    # Пытаемся найти миниатюру на диске
+    base, ext = os.path.splitext(s)
+    thumb_url = f"{base}_thumb{ext}"
+    
+    # Проверяем физическое наличие файла
+    file_path = os.path.join(application.root_path, thumb_url.lstrip('/'))
+    if os.path.exists(file_path):
+        return thumb_url
+    
+    # Если миниатюры нет, возвращаем оригинал
+    return s
 
 db = SQLAlchemy(application)
 mail = Mail(application)
@@ -268,6 +306,7 @@ def admin_portfolio_add():
             os.makedirs(application.config['UPLOAD_FOLDER'], exist_ok=True)
             file_path = os.path.join(application.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
+            create_thumbnail(file_path)  # Создаем миниатюру
             image_url = '/' + file_path.replace('\\', '/')
 
         item = PortfolioItem(
@@ -285,6 +324,7 @@ def admin_portfolio_add():
                 photo_filename = str(uuid.uuid4()) + ext
                 photo_file_path = os.path.join(application.config['UPLOAD_FOLDER'], photo_filename)
                 photo_file.save(photo_file_path)
+                create_thumbnail(photo_file_path)  # Создаем миниатюру
                 p_url = '/' + photo_file_path.replace('\\', '/')
                 new_photo = EventPhoto(portfolio_item=item, image_url=p_url)
                 db.session.add(new_photo)
@@ -310,6 +350,7 @@ def admin_portfolio_edit(id):
             os.makedirs(application.config['UPLOAD_FOLDER'], exist_ok=True)
             file_path = os.path.join(application.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
+            create_thumbnail(file_path)  # Создаем миниатюру
             item.image_url = '/' + file_path.replace('\\', '/')
             
         photos = request.files.getlist('photos')
@@ -319,6 +360,7 @@ def admin_portfolio_edit(id):
                 photo_filename = str(uuid.uuid4()) + ext
                 photo_file_path = os.path.join(application.config['UPLOAD_FOLDER'], photo_filename)
                 photo_file.save(photo_file_path)
+                create_thumbnail(photo_file_path)  # Создаем миниатюру
                 p_url = '/' + photo_file_path.replace('\\', '/')
                 new_photo = EventPhoto(portfolio_item=item, image_url=p_url)
                 db.session.add(new_photo)
@@ -399,6 +441,7 @@ def admin_portfolio_photos(id):
             os.makedirs(application.config['UPLOAD_FOLDER'], exist_ok=True)
             file_path = os.path.join(application.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
+            create_thumbnail(file_path)  # Создаем миниатюру
             photo_url = '/' + file_path.replace('\\', '/')
             new_photo = EventPhoto(portfolio_item_id=item.id, image_url=photo_url)
             db.session.add(new_photo)

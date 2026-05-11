@@ -24,7 +24,7 @@
     <div class="gallery-grid">
         {% for photo in photos %}
         <div class="gallery-item" data-index="{{ loop.index0 }}">
-            <img src="{{ photo.image_url }}" alt="Фото декора">
+            <img src="{{ photo.image_url | thumbnail }}" alt="Фото декора">
             <div class="gallery-overlay">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FFF9DD" stroke-width="1.5"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg>
             </div>

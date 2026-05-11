@@ -62,7 +62,7 @@
                 <a href="{{ url_for('events_list', category='corporate') }}" class="mini-slider-main">
                     {% if corporate_photos %}
                         {% for url in corporate_photos %}
-                        <img src="{{ url }}" class="slider-img {% if loop.first %}active{% endif %}">
+                        <img src="{{ url | thumbnail }}" class="slider-img {% if loop.first %}active{% endif %}">
                         {% endfor %}
                     {% else %}
                         {% set corp_bg = url_for('static', filename='uploads/portfolio/corp_category.jpg') if has_corp else 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop' %}
@@ -91,7 +91,7 @@
                 <a href="{{ url_for('events_list', category='private') }}" class="mini-slider-main">
                     {% if private_photos %}
                         {% for url in private_photos %}
-                        <img src="{{ url }}" class="slider-img {% if loop.first %}active{% endif %}">
+                        <img src="{{ url | thumbnail }}" class="slider-img {% if loop.first %}active{% endif %}">
                         {% endfor %}
                     {% else %}
                         {% set private_bg = url_for('static', filename='uploads/portfolio/private_category.jpg') if has_private else 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop' %}

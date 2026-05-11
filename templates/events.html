@@ -16,7 +16,7 @@
         {% for item in portfolio_items %}
         <a href="{{ url_for('event_detail', id=item.id) }}" class="event-grid-card">
             <div class="event-image">
-                <img src="{{ item.image_url }}" alt="{{ item.title }}">
+                <img src="{{ item.image_url | thumbnail }}" alt="{{ item.title }}">
             </div>
             <div class="event-info">
                 <h3>{{ item.title }}</h3>

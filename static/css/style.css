@@ -272,6 +272,7 @@ a:hover {
     font-size: 14px;
     letter-spacing: 1px;
     border: none;
+    border-radius: 30px;
     cursor: pointer;
     transition: background 0.3s;
 }
@@ -290,6 +291,7 @@ a:hover {
     font-size: 14px;
     letter-spacing: 1px;
     border: none;
+    border-radius: 30px;
     cursor: pointer;
     transition: all 0.3s;
 }
@@ -599,6 +601,17 @@ a:hover {
     align-items: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     z-index: 10;
+}
+
+@media (max-width: 768px) {
+    .hero-floating-box {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        margin: 20px 20px 40px 20px;
+        max-width: calc(100% - 40px);
+        width: auto;
+    }
 }
 .hero-floating-box-icon {
     color: #F4932A;
@@ -1287,10 +1300,10 @@ a:hover {
         position: relative;
         bottom: auto;
         right: auto;
-        margin: 40px 0 0 0;
-        width: 100%;
-        max-width: 100%;
+        margin: 20px !important;
+        width: calc(100% - 40px) !important;
         border: 1px solid var(--gold);
+        box-sizing: border-box;
         display: flex !important;
         order: 2;
     }
